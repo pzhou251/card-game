@@ -6,6 +6,12 @@ public class Card {
 	protected int cost;
 	protected String description;
 	
+	public Card() {
+		this.name = "test";
+		this.cost = 0;
+		this.description = "";
+	}
+	
 	public Card(String name, int cost, String description) {
 		this.name = name;
 		this.cost = cost;

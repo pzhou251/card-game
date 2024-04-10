@@ -42,61 +42,50 @@ public class Player {
 		}
 	}
 	
-	
+	//Getters & Setters
 	public int getMaxHP() {
 		return maxHP;
 	}
-
 
 	public void setMaxHP(int maxHP) {
 		this.maxHP = maxHP;
 	}
 
-
 	public int getHp() {
 		return hp;
 	}
-
 
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
 
-
 	public int getMana() {
 		return mana;
 	}
-
 
 	public void setMana(int mana) {
 		this.mana = mana;
 	}
 
-
 	public int getMaxMana() {
 		return maxMana;
 	}
-
 
 	public void setMaxMana(int maxMana) {
 		this.maxMana = maxMana;
 	}
 
-
 	public int getArmor() {
 		return armor;
 	}
-
 
 	public void setArmor(int armor) {
 		this.armor = armor;
 	}
 
-
 	public ArrayList<Card> getHand() {
 		return hand;
 	}
-
 
 	public void setHand(ArrayList<Card> hand) {
 		this.hand = hand;

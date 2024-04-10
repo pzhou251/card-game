@@ -1,10 +1,34 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class SpellCard extends Card {
 	private String effect;
+	private int power;
 	
-	public SpellCard(String name, int cost, String description, String effect) {
-		super(name, cost, description);
-		this.effect = effect;
+	//CSV: name,cost,description,effect,power
+	public SpellCard(String path, int row) {
+		String line;
+		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
+			for(int i = 1; i < row; i++) {
+				line = reader.readLine();
+			}
+			line = reader.readLine();
+			String stats[] = line.split(",");
+			this.name = stats[0];
+			this.cost = Integer.parseInt(stats[1]);
+			this.description = stats[2];
+			this.effect = stats[3];
+			this.power = Integer.parseInt(stats[4]);
+		}
+		
+		catch(IOException e) {
+			System.err.println("Error loading SpellCard csv");
+		}
+		catch(Exception e) {
+			System.err.println("Error in SpellCard.java");
+			System.err.println(e.getMessage());;
+		}
 	}
 	
 	public void print() {
@@ -13,12 +37,12 @@ public class SpellCard extends Card {
 	}
 	
 	public static void main(String[] args) {
-		Card testCard = new Card("TestBaseCard", 2, "our test card");
-		UnitCard testUnitCard = new UnitCard("TestUnitCard", 2, "our test card", 10, 10, 10);
-		SpellCard testSpellCard = new SpellCard("TestSpellCard", 2, "our test card", "does a thing");
+		String unitPath = "./csvs/Units.csv";
+		String spellPath = "./csvs/Spells.csv";
 		
-		testCard.print();
-		testUnitCard.print();
-		testSpellCard.print();
+		UnitCard wisp = new UnitCard(unitPath,50);
+		
+		wisp.print();
+		
 	}
 }
