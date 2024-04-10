@@ -4,7 +4,7 @@ Abusive Sergent,1,2,1,None,BC~Unit~TempAttack~2
 Argent Squire,1,1,1,None,Keyword~Self~Shield~0
 Leper Gnome,1,2,1,None,DR~EnemyHero~Dmg~2
 Shieldbearer,1,0,4,None,Keyword~Self~Taunt~0
-Worgen Infiltrator,1,2,1,Stealth~Self~Stealh~0
+Worgen Infiltrator,1,2,1,None,Stealth~Self~Stealh~0
 Young Dragonhawk,1,1,1,Beast,Windfury~Self~Windfury~0
 Amani Berserker,2,2,3,None,Rage~Self~Attack~3
 Direwolf Alpha,2,2,2,Beast,PassiveBuff~AdjUnit~Attack~1
@@ -37,7 +37,7 @@ Arcane Golem,3,4,2,None,Keyword~Self~Charge~0:BC~EnemyHero~MaxMana~1
 Coldlight Seer,3,2,3,Murloc,BC~FriendlyFaction~MaxHP~2~Murloc
 Demolisher,3,1,4,Mech,StartTurn~RandomEnemy~Dmg~2
 Emperor Cobra,3,2,3,Beast,Poison~Self~Poison~0
-Injured Blademaster,3,4,7,BC~Self~Dmg~4
+Injured Blademaster,3,4,7,None,BC~Self~Dmg~4
 Defender of Argus,4,3,3,None,BC~AdjUnit~Taunt~0:BC~AdjUnit~MaxHP~1:BC~AdjUnit~Attack~0
 Abomination,5,4,4,Undead,Keyword~Self~Taunt~0:DR~AllChars~Dmg~2
 Argent Commander,6,4,2,None,Keyword~Self~Charge~0:Keyword~Self~Shield~0

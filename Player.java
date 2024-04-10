@@ -13,27 +13,37 @@ public class Player {
 	private int mana = 1;
 	private int maxMana = 1;
 	private int armor = 0;
+	private int deckSize = 0;
 	private ArrayList<Card> hand = new ArrayList<Card>();
 	
 	
-	public Player(String deckPath, ArrayList<Card> allCards) {
+	public Player(String deckPath, int row, ArrayList<Card> allCards) {
 		boolean added;
 		deck = new LinkedList<Card>();
 		String line;
 		try(BufferedReader reader = new BufferedReader(new FileReader(deckPath))){
 			line = reader.readLine();
-			String cardNames[] = line.split(",");
-			for(String cardName : cardNames) {	
+			String cards[] = line.split(",");
+			for(String cardInfo : cards) {
+				String[] stats = cardInfo.split(":");
+				String cardName = stats[0];
+				int numToAdd = Integer.parseInt(stats[1]);
 				added = false;
-				for(Card card : allCards) {
-					if(card.getName().equals(cardName)) {
-						deck.add(card);
-						added = true;
+				int numAdded = 0;
+				for(int i = 0; i < numToAdd; i++) {
+					for(Card card : allCards) {
+						if(card.getName().equals(cardName)) {
+							deck.add(card);
+							added = true;
+							numAdded += 1;
+							this.deckSize += 1;
+						}
+					}
+					if(!added) {
+						System.err.println("Error adding card: " + cardName);
 					}
 				}
-				if(!added) {
-					System.err.println("Error adding card: " + cardName);
-				}
+				System.out.println("Added " + numAdded + " " + cardName);
 			}
 		}
 	
@@ -91,7 +101,22 @@ public class Player {
 		this.hand = hand;
 	}
 	
-	
+	public LinkedList<Card> getDeck() {
+		return deck;
+	}
+
+	public void setDeck(LinkedList<Card> deck) {
+		this.deck = deck;
+	}
+
+	public int getDeckSize() {
+		return deckSize;
+	}
+
+	public void setDeckSize(int deckSize) {
+		this.deckSize = deckSize;
+	}
+
 	//Pre-condition: Player takes damage
 	//Post-condition: Player loses armor then loses hp equal to excess damage. Returns true if fainted
 	public void takeDamage(int damage) {
@@ -167,5 +192,21 @@ public class Player {
 		else {
 			output.setText("Not enough mana");
 		}
+	}
+	
+	public static void main(String[] args) {
+		ArrayList<Card> allCards = new ArrayList<>();
+		String unitPath = "./csvs/Units.csv";
+		String deckPath = "./csvs/playerDecks.csv";
+		UnitCard newCard = new UnitCard(unitPath,1);
+		int row = 1;
+		while(!newCard.getName().equals("Gruul")) { //Check if last card in csv has been added
+			newCard = new UnitCard(unitPath,row);
+			allCards.add(newCard);
+			row++;
+		}	
+		System.out.println("Finished adding " + (row-1) + " cards.");
+		Player player = new Player(deckPath,1,allCards);
+		System.out.println("Deck size: " + player.getDeck().size());
 	}
 }

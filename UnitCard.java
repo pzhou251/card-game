@@ -24,25 +24,26 @@ public class UnitCard extends Card {
 			this.maxHP = Integer.parseInt(stats[3]);
 			this.hp = maxHP;
 			this.faction = stats[4];
-
-			String effects[] = stats[5].split(":");
 			
-			for(String effect : effects) {
-				String effectInfo[] = effect.split("~");
-				if(!this.description.equals("")) {
-					this.description += ", ";
+			if(!stats[5].equals("None")) { //If there is any effects
+				String effects[] = stats[5].split(":");
+				
+				for(String effect : effects) {
+					String effectInfo[] = effect.split("~");
+					if(!this.description.equals("")) { //If more than one effect
+						this.description += ", ";
+					}
+					this.description += effectInfo[0] + " " + effectInfo[2] + " " + effectInfo[1] + " " + effectInfo[3]; //Placeholder
+//					this.effects.add(new Effect()); // Placeholder for effects?
 				}
-				this.description += effectInfo[0] + " " + effectInfo[2] + " " + effectInfo[1] + " " + effectInfo[3]; //Placeholder
 			}
-			
-//			this.description = ; // Parse effects
 		}
 		
 		catch(IOException e) {
 			System.err.println("Error loading UnitCard csv");
 		}
 		catch(Exception e) {
-			System.err.println("Error in UnitCard.java");
+			System.err.println("Error in UnitCard.java, row " + row);
 			System.err.println(e.getMessage());;
 		}
 	}
@@ -51,5 +52,14 @@ public class UnitCard extends Card {
 		super.print();
 		System.out.print(" attack: " + attack + "\n");
 		System.out.print(" hp: " + hp + "\n");
+	}
+	
+	public static void main(String[] args) {
+		String unitPath = "./csvs/Units.csv";
+		String spellPath = "./csvs/Spells.csv";
+		
+		UnitCard wisp = new UnitCard(unitPath,1);
+		
+		wisp.print();
 	}
 }

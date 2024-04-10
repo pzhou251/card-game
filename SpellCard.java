@@ -37,12 +37,6 @@ public class SpellCard extends Card {
 	}
 	
 	public static void main(String[] args) {
-		String unitPath = "./csvs/Units.csv";
-		String spellPath = "./csvs/Spells.csv";
-		
-		UnitCard wisp = new UnitCard(unitPath,50);
-		
-		wisp.print();
-		
+
 	}
 }
