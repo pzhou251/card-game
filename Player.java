@@ -223,6 +223,15 @@ public class Player extends UnitCard {
 		}
 	}
 	
+	//Raises max mana by 1, refreshes mana, draws 1 new card
+	public void endTurn() {
+		if(maxMana < 10) {
+			maxMana += 1;
+		}
+		mana = maxMana;
+		draw(1);
+	}
+	
 //	public static void main(String[] args) {
 //		ArrayList<Card> allCards = new ArrayList<>();
 //		String unitPath = "./csvs/Units.csv";

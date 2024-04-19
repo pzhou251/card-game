@@ -270,6 +270,8 @@ public class GameGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				playerTurn = false;
 				changeState(1);
+				p1.endTurn();
+				refresh();
 			}
 		});
 		btnEndTurn1.setBounds(35, 691, 115, 29);
@@ -463,6 +465,8 @@ public class GameGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				playerTurn = true;
 				changeState(1);
+				p2.endTurn();
+				refresh();
 			}
 		});
 		btnEndTurn2.setBounds(1053, 691, 115, 29);
@@ -608,7 +612,7 @@ public class GameGUI extends JFrame {
 		}
 	}
 	
-	
+	//Changes game state for other methods to reference
 	public void changeState(int state) {
 		String playerName = "";
 		if (playerTurn) {
@@ -650,18 +654,19 @@ public class GameGUI extends JFrame {
 				gameState = 2;
 				
 				break;
-			case 3: //gameState 3 is defending mode - one player chooses a minion to attack and the attacked player must decide who will be hit. depending on playerTurn, sets up board.
+			case 3: //gameState 3 is attacking mode - active player chooses minions to attack
+			case 4: //gameState 4 is defending mode - one player chooses a minion to attack and the attacked player must decide who will be hit. depending on playerTurn, sets up board.
 				break;
-			case 4: //gameState 4 is game end mode - display winner, no one can make moves.
+			case 5: //gameState 5 is game end mode - display winner, no one can make moves.
 				break;
 			default:
 				break;
-}
-		
-		
-		
-		
-		
-		
+		}
+	}
+	
+	//Refreshes gui elements
+	public void refresh() {
+		listHand1.setListData(p1.getHandNamesArray());
+		listHand2.setListData(p2.getHandNamesArray());
 	}
 }
