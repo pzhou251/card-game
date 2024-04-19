@@ -89,8 +89,8 @@ public class UnitCard extends Card {
 
 	public void display(JTextArea output) {
 		super.display(output);
-		output.append("attack: " + attack + "\n");
-		output.append("hp: " + hp + "\n");
+		output.append("Attack: " + attack + "\n");
+		output.append("HP: " + hp + "\n");
 	}
 	
 }

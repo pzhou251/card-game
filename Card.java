@@ -54,8 +54,8 @@ public class Card {
 	
 	public void display(JTextArea output) {
 		output.setText(name + "\n");
-		output.append("cost: " + cost + "\n");
-		output.append("description: \n" + description + "\n");
+		output.append("Cost: " + cost + "\n");
+		output.append("Description: \n" + description + "\n");
 	}
 	
 	public void useCard(JLabel output) {

@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.SystemColor;
+import javax.swing.UIManager;
+import java.awt.Font;
 
 public class CardJPanel extends JPanel {
 
@@ -60,13 +62,15 @@ public class CardJPanel extends JPanel {
 		panel.add(lblCardHP);
 		
 		JTextArea textAreaDesc = new JTextArea();
+		textAreaDesc.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		JScrollPane scrollPaneText = new JScrollPane(textAreaDesc);
-		scrollPaneText.setBounds(1, 48, 138, 90);
-		textAreaDesc.setBackground(SystemColor.window);
+		scrollPaneText.setBounds(10, 50, 120, 80);
+		textAreaDesc.setBackground(UIManager.getColor("Button.highlight"));
 		textAreaDesc.setWrapStyleWord(true);
 		textAreaDesc.setLineWrap(true);
 		textAreaDesc.setText(card.getDescription());
 		textAreaDesc.setEditable(false);
+		panel.add(scrollPaneText);
 		
 
 		
