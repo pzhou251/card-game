@@ -1,4 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 public class Card {
 	
@@ -46,6 +50,12 @@ public class Card {
 		System.out.print(" name: " + name + "\n");
 		System.out.print(" cost: " + cost + "\n");
 		System.out.print(" description: " + description + "\n");
+	}
+	
+	public void display(JTextArea output) {
+		output.setText(name + "\n");
+		output.append("cost: " + cost + "\n");
+		output.append("description: \n" + description + "\n");
 	}
 	
 	public void useCard(JLabel output) {

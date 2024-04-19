@@ -2,18 +2,26 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JTextArea;
+
 public class UnitCard extends Card {
 	private int attack;
-	private int hp;
-	private int maxHP;
+	protected int hp;
+	protected int maxHP;
 	private String faction;
 //	ArrayList<String> effects = new ArrayList<>(); //Could create subclass of effects?
 	
 	//CSV: name,cost,attack,maxHP,faction?,keywords?
+	
+	public UnitCard(int hp) {
+		this.hp = hp;
+		this.maxHP = hp;
+	}
+	
 	public UnitCard(String path, int row) {
 		String line;
 		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
-			for(int i = 1; i < row+1; i++) {
+			for(int i = 0; i < row; i++) {
 				line = reader.readLine();
 			}
 			line = reader.readLine();
@@ -33,8 +41,12 @@ public class UnitCard extends Card {
 					if(!this.description.equals("")) { //If more than one effect
 						this.description += ", ";
 					}
-					this.description += effectInfo[0] + " " + effectInfo[2] + " " + effectInfo[1] + " " + effectInfo[3]; //Placeholder
-//					this.effects.add(new Effect()); // Placeholder for effects?
+					try {
+						this.description += effectInfo[0] + " " + effectInfo[2] + " " + effectInfo[1] + " " + effectInfo[3]; //Placeholder
+					}
+					catch (ArrayIndexOutOfBoundsException arrE){
+						this.description = "None";
+					}
 				}
 			}
 		}
@@ -48,18 +60,37 @@ public class UnitCard extends Card {
 		}
 	}
 	
+	public int getHp() {
+		return hp;
+	}
+	
+	public int getMaxHp() {
+		return maxHP;
+	}
+	
+	public int getAttack() {
+		return attack;
+	}
+	
 	public void print() {
 		super.print();
 		System.out.print(" attack: " + attack + "\n");
 		System.out.print(" hp: " + hp + "\n");
 	}
 	
-	public static void main(String[] args) {
-		String unitPath = "./csvs/Units.csv";
-		String spellPath = "./csvs/Spells.csv";
-		
-		UnitCard wisp = new UnitCard(unitPath,1);
-		
-		wisp.print();
+//	public static void main(String[] args) {
+//		String unitPath = "./csvs/Units.csv";
+//		String spellPath = "./csvs/Spells.csv";
+//		
+//		UnitCard wisp = new UnitCard(unitPath,1);
+//		
+//		wisp.print();
+//	}
+
+	public void display(JTextArea output) {
+		super.display(output);
+		output.append("attack: " + attack + "\n");
+		output.append("hp: " + hp + "\n");
 	}
+	
 }
