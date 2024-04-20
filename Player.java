@@ -139,7 +139,7 @@ public class Player extends UnitCard {
 	public String[] getHandNamesArray() {
 		ArrayList<String> cardNames = new ArrayList<>();
 		for (Card card : hand) {
-			cardNames.add(card.getName());
+			cardNames.add(card.getName() + " - " + card.getCost());
 		}
 		String[] tempArray = new String[cardNames.size()];
 		return cardNames.toArray(tempArray);

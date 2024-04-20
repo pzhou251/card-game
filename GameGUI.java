@@ -40,6 +40,9 @@ public class GameGUI extends JFrame {
 	private static Card selectedCard = null;
 	private ArrayList<Card> hand1;
 	private ArrayList<Card> hand2;
+	private UnitCard[] p1ActiveUnits = new UnitCard[7]; //Stores all units on the board for each player
+	private UnitCard[] p2ActiveUnits = new UnitCard[7];
+//	private ArrayList<Card> unitsToAttack = new ArrayList<>(); //Stores units that are attacking in gameState 3
 	
 	private JLabel lblInstructions;
 	private JTextArea textAreaLog;
@@ -261,6 +264,11 @@ public class GameGUI extends JFrame {
 		contentPane.add(btnUseCard1);
 		
 		btnAttack1 = new JButton("Attack");
+		btnAttack1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeState(3);
+			}
+		});
 		btnAttack1.setBounds(35, 616, 115, 29);
 		btnAttack1.setEnabled(false);
 		contentPane.add(btnAttack1);
@@ -284,7 +292,37 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[0] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_1);
+				}
+				if (gameState == 3 && playerTurn) {
+//					Component[] components = panel1_.getComponents();
+//					for(Component comp : components) { //Cycles through all components in JPanel to find CardJPanel
+//						if(comp instanceof CardJPanel) {
+//							Card card = ((CardJPanel) comp).getCard(); //Gets card from CardJPanel
+//							if(card instanceof UnitCard) {
+//								UnitCard unit = (UnitCard) card;
+//								unit.setAttacking(true);
+//							}
+//						}
+//					}
+					UnitCard unit = p1ActiveUnits[0];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_1.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_1.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -299,7 +337,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[1] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_2);
+				}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[1];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_2.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_2.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -313,7 +371,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[2] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_3);
+				}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[2];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_3.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_3.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -327,7 +405,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[3] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_4);
+				}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[3];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_4.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_4.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -340,7 +438,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[4] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_5);
+				}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[4];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_5.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_5.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -353,7 +471,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[5] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_6);
+				}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[5];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_6.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_6.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -366,7 +504,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p1ActiveUnits[6] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel1_7);
+				}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[6];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel1_7.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel1_7.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -456,6 +614,11 @@ public class GameGUI extends JFrame {
 		contentPane.add(btnUseCard2);
 		
 		btnAttack2 = new JButton("Attack");
+		btnAttack2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				changeState(3);
+			}
+		});
 		btnAttack2.setEnabled(false);
 		btnAttack2.setBounds(1053, 616, 115, 29);
 		contentPane.add(btnAttack2);
@@ -479,7 +642,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[0] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_1);
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[0];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_1.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_1.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -493,7 +676,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[1] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_2);
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[1];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_2.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_2.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -507,7 +710,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[2] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_3);
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[2];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_3.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_3.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -521,7 +744,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[3] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_4);
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[3];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_4.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_4.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -534,7 +777,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[4] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_5);
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[4];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_5.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_5.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -548,7 +811,27 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[5] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_6);
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[5];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_6.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_6.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -563,8 +846,28 @@ public class GameGUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(playerTurn);
 				if (gameState == 2 && !playerTurn) {
+					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+						p2ActiveUnits[6] = (UnitCard) selectedCard;
+					}
 					addCardToPanel(panel2_7);
 					
+				}
+				if (gameState == 3 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[6];
+					if(unit != null) {
+						if(unit.canAttack()) {
+							if(!unit.isAttacking()) {
+								unit.setAttacking(true);
+								panel2_7.setBorder(BorderFactory.createLineBorder(Color.red));
+							}
+							else {
+								if(unit.isAttacking()) {
+									unit.setAttacking(false);
+									panel2_7.setBorder(BorderFactory.createLineBorder(Color.black));
+								}
+							}
+						}
+					}
 				}
 			}
 		});
@@ -633,18 +936,22 @@ public class GameGUI extends JFrame {
 					listHand1.setVisible(true);
 					btnUseCard1.setEnabled(true);
 					btnEndTurn1.setEnabled(true);
+					btnAttack1.setEnabled(true);
 					listHand2.setVisible(false);
 					btnUseCard2.setEnabled(false);
 					btnEndTurn2.setEnabled(false);
+					btnAttack2.setEnabled(false);
 				}
 				else {
 					//set up board for player 2
 					listHand2.setVisible(true);
 					btnUseCard2.setEnabled(true);
 					btnEndTurn2.setEnabled(true);
+					btnAttack2.setEnabled(true);
 					listHand1.setVisible(false);
 					btnUseCard1.setEnabled(false);
 					btnEndTurn1.setEnabled(false);
+					btnAttack1.setEnabled(false);
 				}
 				gameState = 1;
 				
@@ -655,6 +962,10 @@ public class GameGUI extends JFrame {
 				
 				break;
 			case 3: //gameState 3 is attacking mode - active player chooses minions to attack
+				lblInstructions.setText("Select units to attack");
+				btnUseCard1.setEnabled(false);
+				btnUseCard2.setEnabled(false);
+				gameState = 3;
 			case 4: //gameState 4 is defending mode - one player chooses a minion to attack and the attacked player must decide who will be hit. depending on playerTurn, sets up board.
 				break;
 			case 5: //gameState 5 is game end mode - display winner, no one can make moves.
@@ -668,5 +979,9 @@ public class GameGUI extends JFrame {
 	public void refresh() {
 		listHand1.setListData(p1.getHandNamesArray());
 		listHand2.setListData(p2.getHandNamesArray());
+		//Remove dead units from board
+		//Change all units on active player's side to be able to attack
+		//Iterate active units and set them to not attacking
+		//Change all attacking unit's borders back to black
 	}
 }

@@ -11,6 +11,7 @@ public class UnitCard extends Card {
 	protected String faction;
 //	ArrayList<String> effects = new ArrayList<>(); //Could create subclass of effects?
 	protected boolean canAttack = false; //Units cannot attack the turn they're summoned
+	protected boolean isAttacking = false;
 //	protected JTextArea output; //Could add output as variable to UnitCard for ease of use.
 	
 	//CSV: name,cost,attack,maxHP,faction?,keywords?
@@ -98,6 +99,22 @@ public class UnitCard extends Card {
 		this.hp += health;
 	}
 	
+	public boolean canAttack() {
+		return canAttack;
+	}
+
+	public void setCanAttack(boolean canAttack) {
+		this.canAttack = canAttack;
+	}
+
+	public boolean isAttacking() {
+		return isAttacking;
+	}
+
+	public void setAttacking(boolean isAttacking) {
+		this.isAttacking = isAttacking;
+	}
+
 	//UnitCard heals hp equal to int health up to maxHP
 	public void heal(int health) {
 		this.hp += health;
