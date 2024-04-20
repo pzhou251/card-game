@@ -223,13 +223,15 @@ public class GameGUI extends JFrame {
 		listHand1.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) { //action listener for when an item is selected in list
 				try {
-					String item = listHand1.getSelectedValue();
+					String[] nameSplit = listHand1.getSelectedValue().split(" - ");
+					String name = nameSplit[0];
+					System.out.println(name);
 					for(Card card : allCards) {
-						if(card.getName().equals(item)) {
+						if(card.getName().equals(name)) {
 							selectedCard = card;
 						}
 					}
-					selectedCard.display(textAreaInfo1);
+					selectedCard.display(textAreaInfo1);			
 					
 				} catch (NullPointerException nfe) {
 					 textAreaInfo1.setText("Select a card to see its facts here.");
@@ -574,16 +576,18 @@ public class GameGUI extends JFrame {
 		listHand2.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				try {
-					String item = listHand2.getSelectedValue();
+					String[] nameSplit = listHand2.getSelectedValue().split(" - ");
+					String name = nameSplit[0];
+					System.out.println(name);
 					for(Card card : allCards) {
-						if(card.getName().equals(item)) {
+						if(card.getName().equals(name)) {
 							selectedCard = card;
 						}
 					}
 					selectedCard.display(textAreaInfo2);
 					
 				} catch (NullPointerException nfe) {
-					 textAreaInfo1.setText("Select a card to see its facts here.");
+					 textAreaInfo2.setText("Select a card to see its facts here.");
 				}
 			}
 		});
