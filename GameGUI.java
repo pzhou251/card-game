@@ -294,10 +294,7 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[0] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_1);
+					playCard(panel1_1,0);
 				}
 				if (gameState == 3 && playerTurn) {
 //					Component[] components = panel1_.getComponents();
@@ -311,20 +308,7 @@ public class GameGUI extends JFrame {
 //						}
 //					}
 					UnitCard unit = p1ActiveUnits[0];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_1.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_1.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_1);
 				}
 			}
 		});
@@ -339,27 +323,11 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[1] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_2);
+					playCard(panel1_2,1);
 				}
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[1];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_2.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_2.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_2);
 				}
 			}
 		});
@@ -373,27 +341,11 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[2] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_3);
+					playCard(panel1_3,2);
 				}
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[2];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_3.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_3.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_3);
 				}
 			}
 		});
@@ -407,27 +359,11 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[3] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_4);
+					playCard(panel1_4,3);
 				}
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[3];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_4.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_4.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_4);
 				}
 			}
 		});
@@ -440,27 +376,11 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[4] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_5);
+					playCard(panel1_5,4);
 				}
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[4];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_5.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_5.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_5);
 				}
 			}
 		});
@@ -473,27 +393,11 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[5] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_6);
+					playCard(panel1_6,5);
 				}
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[5];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_6.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_6.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_6);
 				}
 			}
 		});
@@ -506,27 +410,11 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameState == 2 && playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p1ActiveUnits[6] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel1_7);
+					playCard(panel1_7,6);
 				}
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[6];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel1_7.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel1_7.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+					toggleAttack(unit, panel1_7);
 				}
 			}
 		});
@@ -645,28 +533,12 @@ public class GameGUI extends JFrame {
 		panel2_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[0] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_1);
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_1,0);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[0];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_1.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_1.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[0];
+					toggleAttack(unit, panel2_1);
 				}
 			}
 		});
@@ -679,28 +551,12 @@ public class GameGUI extends JFrame {
 		panel2_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[1] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_2);
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_2,1);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[1];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_2.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_2.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[1];
+					toggleAttack(unit, panel2_2);
 				}
 			}
 		});
@@ -713,28 +569,12 @@ public class GameGUI extends JFrame {
 		panel2_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[2] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_3);
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_3,2);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[2];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_3.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_3.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[2];
+					toggleAttack(unit, panel2_3);
 				}
 			}
 		});
@@ -747,28 +587,12 @@ public class GameGUI extends JFrame {
 		panel2_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[3] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_4);
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_4,3);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[3];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_4.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_4.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[3];
+					toggleAttack(unit, panel2_4);
 				}
 			}
 		});
@@ -780,28 +604,12 @@ public class GameGUI extends JFrame {
 		panel2_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[4] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_5);
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_5,4);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[4];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_5.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_5.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[4];
+					toggleAttack(unit, panel2_5);
 				}
 			}
 		});
@@ -814,28 +622,12 @@ public class GameGUI extends JFrame {
 		panel2_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[5] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_6);
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_6,5);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[5];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_6.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_6.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[5];
+					toggleAttack(unit, panel2_6);
 				}
 			}
 		});
@@ -849,29 +641,12 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(playerTurn);
-				if (gameState == 2 && !playerTurn) {
-					if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
-						p2ActiveUnits[6] = (UnitCard) selectedCard;
-					}
-					addCardToPanel(panel2_7);
-					
+				if (gameState == 2 && playerTurn) {
+					playCard(panel2_7,6);
 				}
-				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p2ActiveUnits[6];
-					if(unit != null) {
-						if(unit.canAttack()) {
-							if(!unit.isAttacking()) {
-								unit.setAttacking(true);
-								panel2_7.setBorder(BorderFactory.createLineBorder(Color.red));
-							}
-							else {
-								if(unit.isAttacking()) {
-									unit.setAttacking(false);
-									panel2_7.setBorder(BorderFactory.createLineBorder(Color.black));
-								}
-							}
-						}
-					}
+				if (gameState == 3 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[6];
+					toggleAttack(unit, panel2_7);
 				}
 			}
 		});
@@ -976,6 +751,40 @@ public class GameGUI extends JFrame {
 				break;
 			default:
 				break;
+		}
+	}
+	
+	//Adds card from hand to JPanel and adds unit to active units. Turns JPanel blue if unit cannot attack on turn it is played
+	public void playCard(JPanel p, int index) {
+		if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
+			if(playerTurn) {
+				p1ActiveUnits[index] = (UnitCard) selectedCard;
+			}
+			else {
+				p2ActiveUnits[index] = (UnitCard) selectedCard;
+			}
+			if(!((UnitCard) selectedCard).canAttack()) {
+				p.setBorder(BorderFactory.createLineBorder(Color.blue));
+			}
+		}
+		addCardToPanel(p);
+	}
+	
+	//Toggles JPanel color if unit is going to attack and sets unit to attacking
+	public void toggleAttack(UnitCard unit, JPanel p) {
+		if(unit != null) {
+			if(unit.canAttack()) {
+				if(!unit.isAttacking()) {
+					unit.setAttacking(true);
+					p.setBorder(BorderFactory.createLineBorder(Color.red));
+				}
+				else {
+					if(unit.isAttacking()) {
+						unit.setAttacking(false);
+						p.setBorder(BorderFactory.createLineBorder(Color.black));
+					}
+				}
+			}
 		}
 	}
 	
