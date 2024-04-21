@@ -281,6 +281,11 @@ public class GameGUI extends JFrame {
 				playerTurn = false;
 				changeState(1);
 				p1.endTurn();
+				for(UnitCard unit : p1ActiveUnits) {
+					if(unit != null) {
+						unit.setCanAttack(true);
+					}
+				}
 				refresh();
 			}
 		});
@@ -521,6 +526,11 @@ public class GameGUI extends JFrame {
 				playerTurn = true;
 				changeState(1);
 				p2.endTurn();
+				for(UnitCard unit : p2ActiveUnits) {
+					if(unit != null) {
+						unit.setCanAttack(true);
+					}
+				}
 				refresh();
 			}
 		});
@@ -533,10 +543,10 @@ public class GameGUI extends JFrame {
 		panel2_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_1,0);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[0];
 					toggleAttack(unit, panel2_1);
 				}
@@ -551,10 +561,10 @@ public class GameGUI extends JFrame {
 		panel2_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_2,1);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[1];
 					toggleAttack(unit, panel2_2);
 				}
@@ -569,10 +579,10 @@ public class GameGUI extends JFrame {
 		panel2_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_3,2);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[2];
 					toggleAttack(unit, panel2_3);
 				}
@@ -587,10 +597,10 @@ public class GameGUI extends JFrame {
 		panel2_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_4,3);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[3];
 					toggleAttack(unit, panel2_4);
 				}
@@ -604,10 +614,10 @@ public class GameGUI extends JFrame {
 		panel2_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_5,4);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[4];
 					toggleAttack(unit, panel2_5);
 				}
@@ -622,10 +632,10 @@ public class GameGUI extends JFrame {
 		panel2_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_6,5);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[5];
 					toggleAttack(unit, panel2_6);
 				}
@@ -641,10 +651,10 @@ public class GameGUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println(playerTurn);
-				if (gameState == 2 && playerTurn) {
+				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_7,6);
 				}
-				if (gameState == 3 && playerTurn) {
+				if (gameState == 3 && !playerTurn) {
 					UnitCard unit = p1ActiveUnits[6];
 					toggleAttack(unit, panel2_7);
 				}
