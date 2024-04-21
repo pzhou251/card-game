@@ -275,7 +275,7 @@ public class GameGUI extends JFrame {
 						if(defUnit != null) {
 							if(defUnit.isAttacking()) { //if is defending
 								hitsFace = false; //if there is at least one defender, attacker will not hit player
-								System.out.println("Defending p1");
+								textAreaLog.append(defUnit.getName() + " defends against " + activeAttacker.getName() + "\n");
 								//Deal and take damage to active attacking unit
 								defUnit.setAttacking(false);
 								defUnit.setCanAttack(false);
@@ -285,10 +285,11 @@ public class GameGUI extends JFrame {
 						}
 					}
 					if(hitsFace) {
-						System.out.println("P1 gets hit");
+						textAreaLog.append("Player 1 gets hit by " + activeAttacker.getName() + " for " + activeAttacker.getAttack() + " damage.\n");
 						//player takes damage equal to attacking unit's attack
 						p1.takeDamage(activeAttacker.getAttack());
 						attackingUnits.remove(activeAttacker);
+						activeAttacker.setAttacking(false);
 					}
 					activeAttacker = null;
 					if(attackingUnits.size() == 0) { //if no more attacking units
@@ -611,6 +612,7 @@ public class GameGUI extends JFrame {
 						//player takes damage equal to attacking unit's attack
 						p2.takeDamage(activeAttacker.getAttack());
 						attackingUnits.remove(activeAttacker);
+						activeAttacker.setAttacking(false);
 					}
 					activeAttacker = null;
 					if(attackingUnits.size() == 0) { //if no more attacking units
