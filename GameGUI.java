@@ -42,7 +42,8 @@ public class GameGUI extends JFrame {
 	private ArrayList<Card> hand2;
 	private UnitCard[] p1ActiveUnits = new UnitCard[7]; //Stores all units on the board for each player
 	private UnitCard[] p2ActiveUnits = new UnitCard[7];
-//	private ArrayList<Card> unitsToAttack = new ArrayList<>(); //Stores units that are attacking in gameState 3
+	private ArrayList<UnitCard> attackingUnits = new ArrayList<>(); //Stores units that are attacking in gameState 3
+	private UnitCard activeAttacker = null;
 	
 	private JLabel lblInstructions;
 	private JTextArea textAreaLog;
@@ -268,7 +269,40 @@ public class GameGUI extends JFrame {
 		btnAttack1 = new JButton("Attack");
 		btnAttack1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changeState(3);
+				if(gameState == 4) {
+					boolean hitsFace = true;
+					for(UnitCard defUnit : p1ActiveUnits) {
+						if(defUnit != null) {
+							if(defUnit.isAttacking()) { //if is defending
+								hitsFace = false; //if there is at least one defender, attacker will not hit player
+								System.out.println("Defending p1");
+								//Deal and take damage to active attacking unit
+								defUnit.setAttacking(false);
+								defUnit.setCanAttack(false);
+								attackingUnits.remove(activeAttacker);
+								activeAttacker.setAttacking(false);
+							}
+						}
+					}
+					if(hitsFace) {
+						System.out.println("P1 gets hit");
+						//player takes damage equal to attacking unit's attack
+						p1.takeDamage(activeAttacker.getAttack());
+						attackingUnits.remove(activeAttacker);
+					}
+					activeAttacker = null;
+					if(attackingUnits.size() == 0) { //if no more attacking units
+						btnAttack1.setText("Attack");
+						changeState(1);
+					}
+					else {
+						activeAttacker = attackingUnits.get(0);
+						changeState(4);
+					}
+				}
+				else {
+					changeState(3);
+				}
 			}
 		});
 		btnAttack1.setBounds(35, 616, 115, 29);
@@ -279,7 +313,21 @@ public class GameGUI extends JFrame {
 		btnEndTurn1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerTurn = false;
-				changeState(1);
+				boolean unitsAttacking = false;
+				for(UnitCard unit : p1ActiveUnits) {
+					if(unit != null) {
+						if(unit.isAttacking()) {
+							attackingUnits.add(unit);
+							unitsAttacking = true;
+						}
+					}
+				}
+				if(unitsAttacking) {
+					changeState(4);
+				}
+				else {
+					changeState(1);
+				}
 				p1.endTurn();
 				for(UnitCard unit : p1ActiveUnits) {
 					if(unit != null) {
@@ -315,6 +363,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[0];
 					toggleAttack(unit, panel1_1);
 				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[0];
+					toggleDefend(unit, panel1_1);
+				}
 			}
 		});
 		panel1_1.setBounds(240, 80, 140, 140);
@@ -334,6 +386,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[1];
 					toggleAttack(unit, panel1_2);
 				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[1];
+					toggleDefend(unit, panel1_2);
+				}
 			}
 		});
 		panel1_2.setBounds(240, 260, 140, 140);
@@ -351,6 +407,10 @@ public class GameGUI extends JFrame {
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[2];
 					toggleAttack(unit, panel1_3);
+				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[2];
+					toggleDefend(unit, panel1_3);
 				}
 			}
 		});
@@ -370,6 +430,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[3];
 					toggleAttack(unit, panel1_4);
 				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[3];
+					toggleDefend(unit, panel1_4);
+				}
 			}
 		});
 		panel1_4.setBounds(240, 620, 140, 140);
@@ -386,6 +450,10 @@ public class GameGUI extends JFrame {
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[4];
 					toggleAttack(unit, panel1_5);
+				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[4];
+					toggleDefend(unit, panel1_5);
 				}
 			}
 		});
@@ -404,6 +472,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[5];
 					toggleAttack(unit, panel1_6);
 				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[5];
+					toggleDefend(unit, panel1_6);
+				}
 			}
 		});
 		panel1_6.setBounds(420, 260, 140, 140);
@@ -420,6 +492,10 @@ public class GameGUI extends JFrame {
 				if (gameState == 3 && playerTurn) {
 					UnitCard unit = p1ActiveUnits[6];
 					toggleAttack(unit, panel1_7);
+				}
+				if (gameState == 4 && playerTurn) {
+					UnitCard unit = p1ActiveUnits[6];
+					toggleDefend(unit, panel1_7);
 				}
 			}
 		});
@@ -513,7 +589,42 @@ public class GameGUI extends JFrame {
 		btnAttack2 = new JButton("Attack");
 		btnAttack2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				changeState(3);
+				if(gameState == 4) {
+					boolean hitsFace = true;
+					for(UnitCard defUnit : p2ActiveUnits) {
+						if(defUnit != null) {
+							if(defUnit.isAttacking()) { //if is defending
+								textAreaLog.append(defUnit.getName() + " defends against " + activeAttacker.getName() + "\n");
+								hitsFace = false; //if there is at least one defender, attacker will not hit player
+								//Deal and take damage to active attacking unit
+								defUnit.takeDamage(activeAttacker.getAttack(), textAreaLog);
+								activeAttacker.takeDamage(defUnit.getAttack(), textAreaLog);
+								defUnit.setAttacking(false); //Used as defending here
+								defUnit.setCanAttack(false); //Unit cannot attack turn it defends
+								attackingUnits.remove(activeAttacker);
+								activeAttacker.setAttacking(false);
+							}
+						}
+					}
+					if(hitsFace) {
+						textAreaLog.append("Player 2 gets hit by " + activeAttacker.getName() + " for " + activeAttacker.getAttack() + " damage.\n");
+						//player takes damage equal to attacking unit's attack
+						p2.takeDamage(activeAttacker.getAttack());
+						attackingUnits.remove(activeAttacker);
+					}
+					activeAttacker = null;
+					if(attackingUnits.size() == 0) { //if no more attacking units
+						btnAttack2.setText("Attack");
+						changeState(1);
+					}
+					else {
+						activeAttacker = attackingUnits.get(0);
+						changeState(4);
+					}
+				}
+				else {
+					changeState(3);
+				}
 			}
 		});
 		btnAttack2.setEnabled(false);
@@ -524,11 +635,27 @@ public class GameGUI extends JFrame {
 		btnEndTurn2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playerTurn = true;
-				changeState(1);
+				boolean unitsAttacking = false;
+				for(UnitCard unit : p2ActiveUnits) {
+					if(unit != null) {
+						if(unit.isAttacking()) {
+							attackingUnits.add(unit);
+							unitsAttacking = true;
+						}
+					}
+				}
+				if(unitsAttacking) {
+					activeAttacker = attackingUnits.get(0);
+					changeState(4);
+				}
+				else {
+					changeState(1);
+				}
 				p2.endTurn();
 				for(UnitCard unit : p2ActiveUnits) {
 					if(unit != null) {
 						unit.setCanAttack(true);
+						System.out.println(unit.getName() + " can attack");
 					}
 				}
 				refresh();
@@ -547,8 +674,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_1,0);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[0];
+					UnitCard unit = p2ActiveUnits[0];
 					toggleAttack(unit, panel2_1);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[0];
+					toggleDefend(unit, panel2_1);
 				}
 			}
 		});
@@ -565,8 +696,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_2,1);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[1];
+					UnitCard unit = p2ActiveUnits[1];
 					toggleAttack(unit, panel2_2);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[1];
+					toggleDefend(unit, panel2_2);
 				}
 			}
 		});
@@ -583,8 +718,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_3,2);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[2];
+					UnitCard unit = p2ActiveUnits[2];
 					toggleAttack(unit, panel2_3);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[2];
+					toggleDefend(unit, panel2_3);
 				}
 			}
 		});
@@ -601,8 +740,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_4,3);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[3];
+					UnitCard unit = p2ActiveUnits[3];
 					toggleAttack(unit, panel2_4);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[3];
+					toggleDefend(unit, panel2_4);
 				}
 			}
 		});
@@ -618,8 +761,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_5,4);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[4];
+					UnitCard unit = p2ActiveUnits[4];
 					toggleAttack(unit, panel2_5);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[4];
+					toggleDefend(unit, panel2_5);
 				}
 			}
 		});
@@ -636,8 +783,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_6,5);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[5];
+					UnitCard unit = p2ActiveUnits[5];
 					toggleAttack(unit, panel2_6);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[5];
+					toggleDefend(unit, panel2_6);
 				}
 			}
 		});
@@ -655,8 +806,12 @@ public class GameGUI extends JFrame {
 					playCard(panel2_7,6);
 				}
 				if (gameState == 3 && !playerTurn) {
-					UnitCard unit = p1ActiveUnits[6];
+					UnitCard unit = p2ActiveUnits[6];
 					toggleAttack(unit, panel2_7);
+				}
+				if (gameState == 4 && !playerTurn) {
+					UnitCard unit = p2ActiveUnits[6];
+					toggleDefend(unit, panel2_7);
 				}
 			}
 		});
@@ -752,10 +907,36 @@ public class GameGUI extends JFrame {
 				break;
 			case 3: //gameState 3 is attacking mode - active player chooses minions to attack
 				lblInstructions.setText("Select units to attack");
-				btnUseCard1.setEnabled(false);
-				btnUseCard2.setEnabled(false);
 				gameState = 3;
+				break;
 			case 4: //gameState 4 is defending mode - one player chooses a minion to attack and the attacked player must decide who will be hit. depending on playerTurn, sets up board.
+				if(attackingUnits.size() != 0) {
+					activeAttacker = attackingUnits.get(0);
+				}
+				lblInstructions.setText("Select units to defend against " + activeAttacker.getName());
+				if(playerTurn) {
+					listHand1.setVisible(true);
+					btnUseCard1.setEnabled(false);
+					btnEndTurn1.setEnabled(false);
+					btnAttack1.setEnabled(true);
+					btnAttack1.setText("Defend");
+					listHand2.setVisible(false);
+					btnUseCard2.setEnabled(false);
+					btnEndTurn2.setEnabled(false);
+					btnAttack2.setEnabled(false);
+				}
+				else {
+					listHand2.setVisible(true);
+					btnUseCard2.setEnabled(false);
+					btnEndTurn2.setEnabled(false);
+					btnAttack2.setEnabled(true);
+					btnAttack2.setText("Defend");
+					listHand1.setVisible(false);
+					btnUseCard1.setEnabled(false);
+					btnEndTurn1.setEnabled(false);
+					btnAttack1.setEnabled(false);
+				}
+				gameState = 4;
 				break;
 			case 5: //gameState 5 is game end mode - display winner, no one can make moves.
 				break;
@@ -798,10 +979,28 @@ public class GameGUI extends JFrame {
 		}
 	}
 	
+	public void toggleDefend(UnitCard unit, JPanel p) {
+		if(unit != null) {
+			if(unit.canAttack()) { //Doubles as can defend in this case
+				if(!unit.isAttacking()) {
+					unit.setAttacking(true);
+					p.setBorder(BorderFactory.createLineBorder(Color.yellow));
+				}
+				else {
+					if(unit.isAttacking()) {
+						unit.setAttacking(false);
+						p.setBorder(BorderFactory.createLineBorder(Color.black));
+					}
+				}
+			}
+		}
+	}
+	
 	//Refreshes gui elements
 	public void refresh() {
 		listHand1.setListData(p1.getHandNamesArray());
 		listHand2.setListData(p2.getHandNamesArray());
+		System.out.println("Refreshed");
 		//Remove dead units from board
 		//Change all units on active player's side to be able to attack
 		//Iterate active units and set them to not attacking
