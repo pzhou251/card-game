@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -183,9 +184,9 @@ public class Player extends UnitCard {
 	
 	//Pre-condition: Player uses a card on enemy player
 	//Post-condition: Card effect happens based on card type, player loses mana equal to cost. Card is then discarded
-	public void useCard(Card card, Player target, JLabel output) {
+	public void useCard(Card card, Player target, JTextArea output) {
 		if(this.mana >= card.getCost()) {
-			card.useCard(target, output);
+			card.useCard(target, null,output); // CHECK ME
 			discard(card);
 			mana -= card.getCost();
 			System.out.println("Player used " + card.getName() + " on enemy player");
@@ -197,9 +198,9 @@ public class Player extends UnitCard {
 	
 	//Pre-condition: Player uses a card on unit
 	//Post-condition: Card effect happens based on card type, player loses mana equal to cost. Card is then discarded
-	public void useCard(Card card, UnitCard target, JLabel output) {
+	public void useCard(Card card, UnitCard target, JTextArea output) {
 		if(this.mana >= card.getCost()) {
-			card.useCard(target, output);
+			card.useCard(target, null, output); // CHECK ME
 			discard(card);
 			mana -= card.getCost();
 			System.out.println("Player used " + card.getName() + " on " + target.getName());

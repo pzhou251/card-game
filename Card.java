@@ -64,15 +64,13 @@ public class Card {
 		output.setText("");
 	}
 	
-	public void useCard(UnitCard unit, JLabel output) {
-		
-		
-		output.setText("");
+	// useCard method to activate a spell that targets a unit
+	public void useCard(UnitCard unit, SpellCard spell, JTextArea output) {
+		spell.activate(unit, null, output);
 	}
 	
-	public void useCard(Player target, JLabel output) {
-		
-		
-		output.setText("");
+	// useCard method to activate a spell that targets the opponent player
+	public void useCard(Player opponent, SpellCard spell, JTextArea output) {
+		spell.activate(spell, opponent, output);
 	}
 }

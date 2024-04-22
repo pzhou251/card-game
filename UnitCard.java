@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 
@@ -13,9 +14,9 @@ public class UnitCard extends Card {
 	protected boolean canAttack = false; //Units cannot attack the turn they're summoned
 	protected boolean isAttacking = false;
 //	protected JTextArea output; //Could add output as variable to UnitCard for ease of use.
-	
+//	protected String targetType;
 	//CSV: name,cost,attack,maxHP,faction?,keywords?
-	
+		
 	public UnitCard(int hp) {
 		this.hp = hp;
 		this.maxHP = hp;
@@ -37,7 +38,7 @@ public class UnitCard extends Card {
 			this.faction = stats[4];
 			
 			if(!stats[5].equals("None")) { //If there is any effects
-				String effects[] = stats[5].split(":");
+				String effects[] = stats[6].split(":");
 				
 				for(String effect : effects) {
 					String effectInfo[] = effect.split("~");
@@ -87,6 +88,13 @@ public class UnitCard extends Card {
 	public void setAttack(int attack) {
 		this.attack = attack;
 	}
+	
+//	public String getTargetType(){
+//		return targetType;
+//	}
+//	public void setTargetType(String targetType) {
+//		this.targetType = targetType;
+//	}
 	
 	//UnitCard gains attack equal to int attack
 	public void addAttack(int attack) {
