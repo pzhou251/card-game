@@ -38,7 +38,7 @@ public class UnitCard extends Card {
 			this.faction = stats[4];
 			
 			if(!stats[5].equals("None")) { //If there is any effects
-				String effects[] = stats[6].split(":");
+				String effects[] = stats[5].split(":");
 				
 				for(String effect : effects) {
 					String effectInfo[] = effect.split("~");

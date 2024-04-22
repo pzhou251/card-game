@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-public class SpellCard extends UnitCard {
+public class SpellCard extends Card {
 	private String effect;
 	private int power;
 	private String targetType;
@@ -13,7 +13,7 @@ public class SpellCard extends UnitCard {
 	// Constructor with targetType variable
 	//CSV: name,cost,description,effect,power, targetType
 	public SpellCard(String path, int row, String targetType) {
-		super(path, row);
+		super();
 		String line;
 		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
 			for(int i = 1; i < row; i++) {
@@ -40,7 +40,7 @@ public class SpellCard extends UnitCard {
 	// Original constructor
 	//CSV: name,cost,description,effect,power
 	public SpellCard(String path, int row) {
-		super(path, row);
+		super();
 		String line;
 		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
 			for(int i = 1; i < row; i++) {
@@ -116,6 +116,9 @@ public class SpellCard extends UnitCard {
 		}
 	}
 	
+	private void multiTarget() {
+		
+	}
 	
 	// Getters and Setters
 	public String getTargetType(){
