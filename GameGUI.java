@@ -975,10 +975,10 @@ public class GameGUI extends JFrame {
 					lblInstructions.setText("Not enough mana");
 				}
 			}
-			if(!((UnitCard) selectedCard).canAttack()) {
-				p.setBorder(BorderFactory.createLineBorder(Color.blue));
-			}
 			if(enoughMana) {
+				if(!((UnitCard) selectedCard).canAttack()) {
+					p.setBorder(BorderFactory.createLineBorder(Color.blue));
+				}
 				addCardToPanel(p);
 			}
 		}
