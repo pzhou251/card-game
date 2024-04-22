@@ -300,6 +300,7 @@ public class GameGUI extends JFrame {
 						activeAttacker = attackingUnits.get(0);
 						changeState(4);
 					}
+					refresh();
 				}
 				else {
 					changeState(3);
@@ -623,6 +624,7 @@ public class GameGUI extends JFrame {
 						activeAttacker = attackingUnits.get(0);
 						changeState(4);
 					}
+					refresh();
 				}
 				else {
 					changeState(3);
@@ -1004,6 +1006,8 @@ public class GameGUI extends JFrame {
 		listHand2.setListData(p2.getHandNamesArray());
 		System.out.println("Refreshed");
 		//Remove dead units from board
+		//Update all units HP display
+		//Update playe hp display
 		//Change all units on active player's side to be able to attack
 		//Iterate active units and set them to not attacking
 		//Change all attacking unit's borders back to black
