@@ -71,6 +71,6 @@ public class Card {
 	
 	// useCard method to activate a spell that targets the opponent player
 	public void useCard(Player opponent, SpellCard spell, JTextArea output) {
-		spell.activate(spell, opponent, output);
+		spell.activate(null, opponent, output);
 	}
 }
