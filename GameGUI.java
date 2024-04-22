@@ -951,18 +951,37 @@ public class GameGUI extends JFrame {
 	
 	//Adds card from hand to JPanel and adds unit to active units. Turns JPanel blue if unit cannot attack on turn it is played
 	public void playCard(JPanel p, int index) {
+		boolean enoughMana = false;
 		if(selectedCard instanceof UnitCard) { //Adds unit to list of active units
 			if(playerTurn) {
-				p1ActiveUnits[index] = (UnitCard) selectedCard;
+				if(p1.getMana() >= selectedCard.getCost()) {
+					p1ActiveUnits[index] = (UnitCard) selectedCard;
+					enoughMana = true;
+					p1.useMana(selectedCard.getCost());
+					lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+				}
+				else {
+					lblInstructions.setText("Not enough mana");
+				}
 			}
 			else {
-				p2ActiveUnits[index] = (UnitCard) selectedCard;
+				if(p2.getMana() >= selectedCard.getCost()) {
+					p2ActiveUnits[index] = (UnitCard) selectedCard;
+					enoughMana = true;
+					p2.useMana(selectedCard.getCost());
+					lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+				}
+				else {
+					lblInstructions.setText("Not enough mana");
+				}
 			}
 			if(!((UnitCard) selectedCard).canAttack()) {
 				p.setBorder(BorderFactory.createLineBorder(Color.blue));
 			}
+			if(enoughMana) {
+				addCardToPanel(p);
+			}
 		}
-		addCardToPanel(p);
 	}
 	
 	//Toggles JPanel color if unit is going to attack and sets unit to attacking
