@@ -95,6 +95,10 @@ public class Player extends UnitCard {
 
 	public void setMana(int mana) {
 		this.mana = mana;
+	};
+	
+	public void useMana(int mana) { //Calling this method requires checking if there's enough mana first
+		this.mana -= mana;
 	}
 
 	public int getMaxMana() {
