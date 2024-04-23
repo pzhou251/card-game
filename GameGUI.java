@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -981,19 +982,48 @@ public class GameGUI extends JFrame {
 				}
 				addCardToPanel(p);
 			}
-			// working here for spell card logic
+			
+			// Conditionals for if the selectedCard is a SpellCard
 			if (selectedCard instanceof SpellCard) { // Adds spell card to active hand
-				if(playerTurn) {
-					if(p1.getMana() >= selectedCard.getCost()) {
-						
+				SpellCard spellCard = (SpellCard) selectedCard;
+				btnUseCard1.setText("Cast Spell");
+				
+				if(gameState == 3 && playerTurn && p1.getMana()>= spellCard.getCost()) {
+					for (UnitCard unitCard: p2ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
+						JPanel panelWithUnitCard = getPanelContainingUnitCard(unitCard); // checks if the UnitCard is on JPanel
+						if (panelWithUnitCard != null) {
+							panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard
+								@Override
+								public void mouseClicked(MouseEvent e) {
+									UnitCard targetUnit = unitCard;
+									spellCard.activate(targetUnit, null, p2, textAreaInfo1);
+									p1.useMana(spellCard.getCost());
+									lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+								}
+							});
+						}
+						}
+				} else {
+					if (gameState == 3 && playerTurn == false && p2.getMana() >= spellCard.getCost()) {
+						for (UnitCard unitCard: p1ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
+							JPanel panelWithUnitCard = getPanelContainingUnitCard(unitCard); // checks if the UnitCard is on JPanel
+							if (panelWithUnitCard != null) {
+								panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										UnitCard targetUnit = unitCard;
+										spellCard.activate(targetUnit, null, p1, textAreaInfo2);
+										p2.useMana(spellCard.getCost());
+										lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+									}
+								});
+							}
+						}
 					}
 				}
-				
 			}
-			
+			}
 		}
-	}
-	
 	//Toggles JPanel color if unit is going to attack and sets unit to attacking
 	public void toggleAttack(UnitCard unit, JPanel p) {
 		if(unit != null) {
@@ -1027,6 +1057,26 @@ public class GameGUI extends JFrame {
 				}
 			}
 		}
+	}
+	
+	// Method to find the panel containing a given UnitCard
+	private JPanel getPanelContainingUnitCard(UnitCard unitCard) {
+	    for (Component comp : getContentPane().getComponents()) {
+	        if (comp instanceof JPanel && containsUnitCard((JPanel) comp, unitCard)) {
+	            return (JPanel) comp;
+	        }
+	    }
+	    return null;
+	}
+
+	// Method to check if the JPanel contains a UnitCard
+	private boolean containsUnitCard(JPanel panel, UnitCard unitCard) {
+	    for (Component comp : panel.getComponents()) {
+	        if (comp.equals(unitCard)) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 	
 	//Refreshes gui elements
