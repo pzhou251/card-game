@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import java.util.ArrayList;
 
 public class SpellCard extends Card {
 	private String effect;
@@ -66,7 +67,7 @@ public class SpellCard extends Card {
 	}
 	
 	// Activates the SpellCard depending on the type of target
-	public void activate(UnitCard target, Player opponent, JTextArea output) {
+	public void activate(UnitCard target, ArrayList<UnitCard> targets,Player opponent, JTextArea output) {
 		targetType = this.targetType;
 		
 		switch(targetType) {
@@ -75,16 +76,16 @@ public class SpellCard extends Card {
 				break;
 			
 			case "MultiTarget":
-				
+				multiTarget(targets, output);
 				break;
 			
 			case "PlayerTarget":
 				playerTarget(opponent, output);
 				break;
 			
-			case "GeneralEffect":
+//			case "GeneralEffect":
 				
-				break;
+//				break;
 			default:
 				output.setText("Invalid target type");
 				break;
@@ -97,9 +98,9 @@ public class SpellCard extends Card {
 		boolean targetDestroyed = targetUnit.takeDamage(damage, output); 
 		
 		if (targetDestroyed == true) {
-			output.append(effect);
+			output.append(effect + "\n");
 		} else {
-			output.append(this.name + " was used on " + targetUnit.getName());
+			output.append(this.name + " was used on " + targetUnit.getName() + "\n");
 		}
 		
 	}
@@ -110,13 +111,32 @@ public class SpellCard extends Card {
 		boolean targetDestroyed = opponent.takeDamage(damage, output);
 		
 		if (targetDestroyed == true) {
-			output.append(effect);
+			output.append(effect + "\n");
 		} else {
-			output.append(this.name + " was used on " + opponent.getName());
+			output.append(this.name + " was used on " + opponent.getName() + "\n");
 		}
 	}
 	
-	private void multiTarget() {
+	// Method called if there are multiple targets
+	private void multiTarget(ArrayList<UnitCard> targets, JTextArea output) {
+		int damage = this.power;
+		boolean anyTargetDestroyed = false;
+		
+		for (UnitCard target: targets) {
+			boolean targetDestroyed = target.takeDamage(damage, output);
+			
+			if (targetDestroyed) {
+				anyTargetDestroyed = true;
+			}
+		}
+		if (anyTargetDestroyed) {
+			output.append(effect + "\n");
+		}
+		else {
+			output.append(this.name + " was used.\n");
+		}
+		
+		
 		
 	}
 	

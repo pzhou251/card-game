@@ -981,6 +981,16 @@ public class GameGUI extends JFrame {
 				}
 				addCardToPanel(p);
 			}
+			// working here for spell card logic
+			if (selectedCard instanceof SpellCard) { // Adds spell card to active hand
+				if(playerTurn) {
+					if(p1.getMana() >= selectedCard.getCost()) {
+						
+					}
+				}
+				
+			}
+			
 		}
 	}
 	

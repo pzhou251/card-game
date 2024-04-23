@@ -3,6 +3,7 @@ import java.io.FileReader;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import java.util.ArrayList;
 
 public class Card {
 	
@@ -58,19 +59,23 @@ public class Card {
 		output.append("Description: \n" + description + "\n");
 	}
 	
-	public void useCard(JLabel output) {
-		
-		
+	// Default useCard constructor
+	public void useCard(JTextArea output) {
 		output.setText("");
+	}
+	
+	// useCard method to activate a spell targets multiple units
+	public void useCard(ArrayList<UnitCard> targets, SpellCard spell, JTextArea output) {
+		spell.activate(null, targets, null, output);
 	}
 	
 	// useCard method to activate a spell that targets a unit
 	public void useCard(UnitCard unit, SpellCard spell, JTextArea output) {
-		spell.activate(unit, null, output);
+		spell.activate(unit, null, null, output);
 	}
 	
 	// useCard method to activate a spell that targets the opponent player
 	public void useCard(Player opponent, SpellCard spell, JTextArea output) {
-		spell.activate(null, opponent, output);
+		spell.activate(null, null, opponent, output);
 	}
 }

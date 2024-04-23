@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
-// hello 
+
 public class Player extends UnitCard {
 	private LinkedList<Card> deck;
 	private int mana = 1;
@@ -216,7 +216,7 @@ public class Player extends UnitCard {
 	
 	//Pre-condition: Player uses a card
 	//Post-condition: Card effect happens based on card type, player loses mana equal to cost. Card is then discarded
-	public void useCard(Card card, JLabel output) {
+	public void useCard(Card card, JTextArea output) {
 		if(this.mana >= card.getCost()) {
 			card.useCard(output);
 			discard(card);
