@@ -1172,14 +1172,31 @@ public class GameGUI extends JFrame {
 	    return false;
 	}
 	
-	//Refreshes gui elements
+	//Refreshes GUI elements
 	public void refresh() {
-		listHand1.setListData(p1.getHandNamesArray());
-		listHand2.setListData(p2.getHandNamesArray());
-		System.out.println("Refreshed");
+
+	    // Update player information and GUI components
+	    lblHP1.setText("HP: " + p1.getHp() + "/" + p1.getMaxHp());
+	    lblHP2.setText("HP: " + p2.getHp() + "/" + p2.getMaxHp());
+
+	    lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+	    lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+
+	    lblArmor1.setText("Armor: " + p1.getArmor());
+	    lblArmor2.setText("Armor: " + p2.getArmor());
+
+	    lblDeck1.setText("Deck: " + p1.getDeck().size());
+	    lblDeck2.setText("Deck: " + p2.getDeck().size());
+
+	    // Update list data displaying player hands
+	    listHand1.setListData(p1.getHandNamesArray());
+	    listHand2.setListData(p2.getHandNamesArray());
+
+	    System.out.println("GUI Refreshed");
+	
 		//Remove dead units from board
 		//Update all units HP display
-		//Update playe hp display
+		//Update player hp display
 		//Change all units on active player's side to be able to attack
 		//Iterate active units and set them to not attacking
 		//Change all attacking unit's borders back to black
