@@ -2,3 +2,9 @@ name,cost,description,effect,power,targetType
 Inquisitive Creation,4,Deal 1 damage to all enemy units,All enemy units have taken 1 damage,3,MultiTarget
 Mimiron's Blades,1,Deal 3 damage to an enemy minon,Enemy minon has taken 3 damage,3,SingleTarget
 Grasping Roots,1,Deal 2 damage opponent player,Opponent player has taken 2 damage,2,PlayerTarget
+Fireball,4,Deal 6 damage to a unit,Enemy unit has taken 6 damage,6,SingleTarget
+Holy Smite,1,Deal 2 damage to a unit,Enemy unit has taken 2 damage,2,SingleTarget
+Arcane Explosion,2,Deal 1 damage to all enemy units,All enemy units have taken 1 damage,1,MultiTarget
+Consecration,4,Deals 2 damage to all enemies,All enemy units have taken 2 damage,2,MultiTarget
+Lightning Bolt,1,Deal 3 damage to an enemy  unit,Enemy unit has taken 3 damage,3,SingleTarget
+Shadow Bolt,3,Deal 4 damage to an enemy minion,Enemy minion has taken 4 damage,4,SingleTarget

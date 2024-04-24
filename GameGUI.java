@@ -982,48 +982,140 @@ public class GameGUI extends JFrame {
 				}
 				addCardToPanel(p);
 			}
+			}
 			
 			// Conditionals for if the selectedCard is a SpellCard
 			if (selectedCard instanceof SpellCard) { // Adds spell card to active hand
 				SpellCard spellCard = (SpellCard) selectedCard;
-				btnUseCard1.setText("Cast Spell");
 				
+				// Player 1 using spell card
 				if(gameState == 3 && playerTurn && p1.getMana()>= spellCard.getCost()) {
-					for (UnitCard unitCard: p2ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
-						JPanel panelWithUnitCard = getPanelContainingUnitCard(unitCard); // checks if the UnitCard is on JPanel
-						if (panelWithUnitCard != null) {
-							panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard
-								@Override
-								public void mouseClicked(MouseEvent e) {
-									UnitCard targetUnit = unitCard;
-									spellCard.activate(targetUnit, null, p2, textAreaInfo1);
-									p1.useMana(spellCard.getCost());
-									lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
-								}
-							});
-						}
-						}
-				} else {
-					if (gameState == 3 && playerTurn == false && p2.getMana() >= spellCard.getCost()) {
-						for (UnitCard unitCard: p1ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
-							JPanel panelWithUnitCard = getPanelContainingUnitCard(unitCard); // checks if the UnitCard is on JPanel
+					btnAttack1.setText("Cast Spell");
+					
+					// Player 1 using targeting Single Target
+					if(spellCard.getTargetType().equals("SingleTarget")){
+						for (UnitCard unitCard: p2ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
+							JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard); // checks if the UnitCard is on JPanel
 							if (panelWithUnitCard != null) {
 								panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard
 									@Override
 									public void mouseClicked(MouseEvent e) {
 										UnitCard targetUnit = unitCard;
-										spellCard.activate(targetUnit, null, p1, textAreaInfo2);
-										p2.useMana(spellCard.getCost());
-										lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+										spellCard.activate(targetUnit, null, p2, textAreaInfo1);
+										p1.useMana(spellCard.getCost());
+										lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+									}
+							});
+							}
+						}	
+					} 
+					// Player 1 targeting Player 2
+					else if(spellCard.getTargetType().equals("PlayerTarget")) {
+						btnAttack1.setText("Cast Spell on Player");
+						btnAttack1.addActionListener(new ActionListener(){
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								spellCard.activate(null, null, p2, textAreaInfo1);
+								p1.useMana(spellCard.getCost());
+								lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+								btnAttack1.setText("Attack"); // reset button back to original text after spell is used
+								btnAttack1.removeActionListener(this);
+							}
+						});
+					}
+					// Player 1 selecting multiple targets
+					else if(spellCard.getTargetType().equals("MultiTarget")) {
+						ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
+						for (UnitCard unitCard: p2ActiveUnits) { // iterates over opponent's units on the board
+							JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
+							if(panelWithUnitCard != null) {
+								panelWithUnitCard.addMouseListener(new MouseAdapter(){
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										UnitCard targetUnit = unitCard;
+										selectedTargets.add(targetUnit); // adds selected unit to list
+										if (selectedTargets.size() <= p2ActiveUnits.length) {
+											spellCard.activate(null, selectedTargets, p2, textAreaInfo1);
+											p1.useMana(spellCard.getCost());
+											lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+											//selectedTargets.clear(); // clears list after spells are used; have it clear at end of turn or when the gui refreshes?
+										}
 									}
 								});
 							}
 						}
 					}
+					
+				
+				// Player 2 using a spell card	
+				} else if (gameState == 3 && playerTurn == false && p2.getMana() >= spellCard.getCost()) {
+						btnAttack2.setText("Cast Spell");
+						
+						// Player 2 using targeting Single Target
+						if(spellCard.getTargetType().equals("SingleTarget")){
+							for (UnitCard unitCard: p1ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
+								JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard); // checks if the UnitCard is on JPanel
+								if (panelWithUnitCard != null) {
+									panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard
+										@Override
+										public void mouseClicked(MouseEvent e) {
+											UnitCard targetUnit = unitCard;
+											spellCard.activate(targetUnit, null, p1, textAreaInfo2);
+											p2.useMana(spellCard.getCost());
+											lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+										}
+								});
+								}
+							}	
+						}
+						// Player 2 targeting Player 1
+						else if(spellCard.getTargetType().equals("PlayerTarget")) {
+							btnAttack2.setText("Cast Spell on Player");
+							btnAttack2.addActionListener(new ActionListener(){
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									spellCard.activate(null, null, p1, textAreaInfo2);
+									p2.useMana(spellCard.getCost());
+									lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+									btnAttack2.setText("Attack"); // reset button back to original text after spell is used
+									btnAttack2.removeActionListener(this);
+								}
+							});
+						}
+						// Player 2 selecting multiple targets
+						else if(spellCard.getTargetType().equals("MultiTarget")) {
+							ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
+							for (UnitCard unitCard: p2ActiveUnits) { // iterates over opponent's units on the board
+								JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
+								if(panelWithUnitCard != null) {
+									panelWithUnitCard.addMouseListener(new MouseAdapter(){
+										@Override
+										public void mouseClicked(MouseEvent e) {
+											UnitCard targetUnit = unitCard;
+											selectedTargets.add(targetUnit); // adds selected unit to list
+											if (selectedTargets.size() <= p1ActiveUnits.length) {
+												spellCard.activate(null, selectedTargets, p1, textAreaInfo2);
+												p2.useMana(spellCard.getCost());
+												lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+											}
+										}
+									});
+								}
+							}
+						}
+						} 
+				else {
+					lblInstructions.setText("Not enough mana");
+				}
+				if(enoughMana) {
+					if(!((UnitCard) selectedCard).canAttack()) {
+						p.setBorder(BorderFactory.createLineBorder(Color.blue));
+					}
+					addCardToPanel(p);
 				}
 			}
-			}
 		}
+	
 	//Toggles JPanel color if unit is going to attack and sets unit to attacking
 	public void toggleAttack(UnitCard unit, JPanel p) {
 		if(unit != null) {
@@ -1060,9 +1152,9 @@ public class GameGUI extends JFrame {
 	}
 	
 	// Method to find the panel containing a given UnitCard
-	private JPanel getPanelContainingUnitCard(UnitCard unitCard) {
+	private JPanel getPanelWithUnitCard(UnitCard unitCard) {
 	    for (Component comp : getContentPane().getComponents()) {
-	        if (comp instanceof JPanel && containsUnitCard((JPanel) comp, unitCard)) {
+	        if (comp instanceof JPanel && hasUnitCard((JPanel) comp, unitCard)) {
 	            return (JPanel) comp;
 	        }
 	    }
@@ -1070,7 +1162,7 @@ public class GameGUI extends JFrame {
 	}
 
 	// Method to check if the JPanel contains a UnitCard
-	private boolean containsUnitCard(JPanel panel, UnitCard unitCard) {
+	private boolean hasUnitCard(JPanel panel, UnitCard unitCard) {
 	    for (Component comp : panel.getComponents()) {
 	        if (comp.equals(unitCard)) {
 	            return true;
