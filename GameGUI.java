@@ -858,6 +858,7 @@ public class GameGUI extends JFrame {
 		if (playerTurn) {
 			//refresh p1's side
 			//hand, board, player info
+			// from multiple target selection, clear the ArrayList selectedTargets when the player's turn ends (not sure if done here or at refresh())
 		}
 		else {
 			//refresh p2's side
@@ -994,6 +995,7 @@ public class GameGUI extends JFrame {
 					
 					// Player 1 using targeting Single Target
 					if(spellCard.getTargetType().equals("SingleTarget")){
+						lblInstructions.setText("Select a single enemy unit to Cast Spell on.");
 						for (UnitCard unitCard: p2ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
 							JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard); // checks if the UnitCard is on JPanel
 							if (panelWithUnitCard != null) {
@@ -1011,6 +1013,7 @@ public class GameGUI extends JFrame {
 					} 
 					// Player 1 targeting Player 2
 					else if(spellCard.getTargetType().equals("PlayerTarget")) {
+						lblInstructions.setText("Spell will be casted on enemy player if used.");
 						btnAttack1.setText("Cast Spell on Player");
 						btnAttack1.addActionListener(new ActionListener(){
 							@Override
@@ -1025,6 +1028,7 @@ public class GameGUI extends JFrame {
 					}
 					// Player 1 selecting multiple targets
 					else if(spellCard.getTargetType().equals("MultiTarget")) {
+						lblInstructions.setText("Select described number of enemy units.");
 						ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
 						for (UnitCard unitCard: p2ActiveUnits) { // iterates over opponent's units on the board
 							JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
@@ -1053,6 +1057,7 @@ public class GameGUI extends JFrame {
 						
 						// Player 2 using targeting Single Target
 						if(spellCard.getTargetType().equals("SingleTarget")){
+							lblInstructions.setText("Select a single enemy unit to Cast Spell on");
 							for (UnitCard unitCard: p1ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
 								JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard); // checks if the UnitCard is on JPanel
 								if (panelWithUnitCard != null) {
@@ -1070,6 +1075,7 @@ public class GameGUI extends JFrame {
 						}
 						// Player 2 targeting Player 1
 						else if(spellCard.getTargetType().equals("PlayerTarget")) {
+							lblInstructions.setText("Spell will be casted on enemy player if used.");
 							btnAttack2.setText("Cast Spell on Player");
 							btnAttack2.addActionListener(new ActionListener(){
 								@Override
@@ -1084,6 +1090,7 @@ public class GameGUI extends JFrame {
 						}
 						// Player 2 selecting multiple targets
 						else if(spellCard.getTargetType().equals("MultiTarget")) {
+							lblInstructions.setText("Select described number of enemy units.");
 							ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
 							for (UnitCard unitCard: p2ActiveUnits) { // iterates over opponent's units on the board
 								JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
@@ -1182,5 +1189,7 @@ public class GameGUI extends JFrame {
 		//Change all units on active player's side to be able to attack
 		//Iterate active units and set them to not attacking
 		//Change all attacking unit's borders back to black
+		// From multiple target selection in playCard, clear the ArrayList selectedTargets when the player's turn ends
+		// Reset lblInstruction's text here (?)
 	}
 }
