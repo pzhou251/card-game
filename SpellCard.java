@@ -11,35 +11,7 @@ public class SpellCard extends Card {
 	private int power;
 	private String targetType;
 	
-	// Constructor with targetType variable
-	//CSV: name,cost,description,effect,power, targetType
-	public SpellCard(String path, int row, String targetType) {
-		super();
-		String line;
-		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
-			for(int i = 1; i < row; i++) {
-				line = reader.readLine();
-			}
-			line = reader.readLine();
-			String stats[] = line.split(",");
-			this.name = stats[0];
-			this.cost = Integer.parseInt(stats[1]);
-			this.description = stats[2];
-			this.effect = stats[3];
-			this.power = Integer.parseInt(stats[4]);
-			this.targetType = stats[5];
-		}
-		
-		catch(IOException e) {
-			System.err.println("Error loading SpellCard csv");
-		}
-		catch(Exception e) {
-			System.err.println("Error in SpellCard.java");
-			System.err.println(e.getMessage());;
-		}
-	}
-	// Original constructor
-	//CSV: name,cost,description,effect,power
+	//CSV: name,cost,description,effect,power,targetType
 	public SpellCard(String path, int row) {
 		super();
 		String line;
@@ -151,6 +123,7 @@ public class SpellCard extends Card {
 	public void print() {
 		super.print();
 		System.out.print(" effect: " + effect + "\n");
+		System.out.print(" target type: " + targetType + "\n");
 	}
 	
 	public static void main(String[] args) {

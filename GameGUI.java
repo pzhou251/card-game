@@ -81,7 +81,7 @@ public class GameGUI extends JFrame {
 			public void run() {
 				try {
 					int NUM_UNITS = 50;
-					int NUM_SPELLS = 0;
+					int NUM_SPELLS = 9;
 					String unitPath = "./csvs/Units.csv";
 					String spellPath = "./csvs/Spells.csv";
 					String deckPath = "./csvs/sampledeck.csv";
@@ -1113,12 +1113,6 @@ public class GameGUI extends JFrame {
 						} 
 				else {
 					lblInstructions.setText("Not enough mana");
-				}
-				if(enoughMana) {
-					if(!((UnitCard) selectedCard).canAttack()) {
-						p.setBorder(BorderFactory.createLineBorder(Color.blue));
-					}
-					addCardToPanel(p);
 				}
 			}
 		}
