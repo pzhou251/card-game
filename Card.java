@@ -54,7 +54,14 @@ public class Card {
 	}
 	
 	public void display(JTextArea output) {
-		output.setText(name + "\n");
+		output.setText("");
+		if(this instanceof UnitCard) {
+			output.append("Unit\n");
+		}
+		else if (this instanceof SpellCard) {
+			output.append("Spell\n");
+		}
+		output.append(name + "\n");
 		output.append("Cost: " + cost + "\n");
 		output.append("Description: \n" + description + "\n");
 	}
