@@ -1172,28 +1172,30 @@ public class GameGUI extends JFrame {
 	    return false;
 	}
 	
-	//Refreshes GUI elements
-	public void refresh() {
+	// Refreshes GUI elements to reflect the current state of the game
+    public void refresh() {
+        // Update player information
+        lblHP1.setText("HP: " + p1.getHp() + "/" + p1.getMaxHp());
+        lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+        lblDeck1.setText("Deck: " + p1.getDeck().size());
+        lblArmor1.setText("Armor: " + p1.getArmor());
 
-	    // Update player information and GUI components
-	    lblHP1.setText("HP: " + p1.getHp() + "/" + p1.getMaxHp());
-	    lblHP2.setText("HP: " + p2.getHp() + "/" + p2.getMaxHp());
+        lblHP2.setText("HP: " + p2.getHp() + "/" + p2.getMaxHp());
+        lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+        lblDeck2.setText("Deck: " + p2.getDeck().size());
+        lblArmor2.setText("Armor: " + p2.getArmor());
 
-	    lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
-	    lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+        // Update hand list data for both players
+        listHand1.setListData(p1.getHandNamesArray());
+        listHand2.setListData(p2.getHandNamesArray());
 
-	    lblArmor1.setText("Armor: " + p1.getArmor());
-	    lblArmor2.setText("Armor: " + p2.getArmor());
+        // Update unit panels for both players
+        updateUnitPanels(p1ActiveUnits, true); // Update Player 1's panels
+        updateUnitPanels(p2ActiveUnits, false); // Update Player 2's panels
 
-	    lblDeck1.setText("Deck: " + p1.getDeck().size());
-	    lblDeck2.setText("Deck: " + p2.getDeck().size());
-
-	    // Update list data displaying player hands
-	    listHand1.setListData(p1.getHandNamesArray());
-	    listHand2.setListData(p2.getHandNamesArray());
-
-	    System.out.println("GUI Refreshed");
-	
+        // Print refresh status to console for debugging
+        System.out.println("GUI Refreshed");
+    }
 		//Remove dead units from board
 		//Update all units HP display
 		//Update player hp display
@@ -1202,5 +1204,41 @@ public class GameGUI extends JFrame {
 		//Change all attacking unit's borders back to black
 		// From multiple target selection in playCard, clear the ArrayList selectedTargets when the player's turn ends
 		// Reset lblInstruction's text here (?)
-	}
+	
+	 // Update the display of a unit on a given panel
+    private void updateUnitDisplay(JPanel panel, UnitCard unit) {
+        // Ideally, this method should be adjusted based on how you want to display unit details
+        panel.setBorder(BorderFactory.createLineBorder(unit.isAttacking() ? Color.red : Color.black));
+        // You can add more GUI elements here, like labels for HP, attack values, etc.
+    }// Utility method to get the panel corresponding to a unit index
+    private JPanel getUnitPanel(int index, String panelPrefix) {
+        String panelName = panelPrefix + (index + 1);
+        for (Component comp : getContentPane().getComponents()) {
+            if (comp instanceof JPanel && comp.getName() != null && comp.getName().equals(panelName)) {
+                return (JPanel) comp;
+            }
+        }
+        return null;
+    }
+	// Updates the panels where units are displayed based on their current state
+    private void updateUnitPanels(UnitCard[] activeUnits, boolean isPlayerOne) {
+        String panelPrefix = isPlayerOne ? "panel1" : "panel2";
+        for (int i = 0; i < activeUnits.length; i++) {
+            UnitCard unit = activeUnits[i];
+            JPanel panel = getUnitPanel(i, panelPrefix); // Fetch the correct panel for each unit based on its index
+            if (unit == null || (unit != null && unit.getHp() <= 0)) {
+                // If no unit is assigned to this slot or the unit is dead, clear the panel
+                if (panel != null) {
+                    panel.removeAll();
+                    panel.revalidate();
+                    panel.repaint();
+                    panel.setBorder(BorderFactory.createLineBorder(Color.black)); // Reset the border
+                }
+                activeUnits[i] = null; // Remove dead or null units from the array
+            } else {
+                // If the unit is alive, update its display
+                updateUnitDisplay(panel, unit);
+            }
+        }
+    }
 }
