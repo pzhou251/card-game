@@ -89,7 +89,7 @@ public class SpellCard extends Card {
 		}
 	}
 	
-	// Method called if there are multiple targets\
+	// Method called if there are multiple targets
 	private void multiTarget(ArrayList<UnitCard> targets, JTextArea output) {
 		int damage = this.power;
 		boolean anyTargetDestroyed = false;

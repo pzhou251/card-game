@@ -72,6 +72,7 @@ public class GameGUI extends JFrame {
 	private JButton btnAttack2;
 	private JButton btnEndTurn2;
 	
+	private SpellCard selectedSpellCard;
 
 	/**
 	 * Launch the application.
@@ -259,7 +260,9 @@ public class GameGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCard != null) {
 					changeState(2);
-					
+				}
+				if (selectedCard instanceof SpellCard) {
+					changeState(5);
 				}
 				
 			}
@@ -371,6 +374,9 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[0];
 					toggleDefend(unit, panel1_1);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
 			}
 		});
 		panel1_1.setBounds(240, 80, 140, 140);
@@ -394,6 +400,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[1];
 					toggleDefend(unit, panel1_2);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
+
 			}
 		});
 		panel1_2.setBounds(240, 260, 140, 140);
@@ -416,6 +426,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[2];
 					toggleDefend(unit, panel1_3);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
+
 			}
 		});
 		panel1_3.setBounds(240, 440, 140, 140);
@@ -438,6 +452,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[3];
 					toggleDefend(unit, panel1_4);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
+
 			}
 		});
 		panel1_4.setBounds(240, 620, 140, 140);
@@ -459,6 +477,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[4];
 					toggleDefend(unit, panel1_5);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
+
 			}
 		});
 		panel1_5.setBounds(420, 80, 140, 140);
@@ -480,6 +502,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[5];
 					toggleDefend(unit, panel1_6);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
+
 			}
 		});
 		panel1_6.setBounds(420, 260, 140, 140);
@@ -501,6 +527,10 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p1ActiveUnits[6];
 					toggleDefend(unit, panel1_7);
 				}
+				if(gameState == 5 && playerTurn) {
+					castSpell();
+				}
+
 			}
 		});
 		panel1_7.setBounds(420, 440, 140, 140);
@@ -578,12 +608,15 @@ public class GameGUI extends JFrame {
 		contentPane.add(scrollPaneInfo2);
 		
 		//player 2's buttons
+		// game state 5 here?
 		btnUseCard2 = new JButton("Use Card");
 		btnUseCard2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCard != null) {
 					changeState(2);
-					
+				}
+				if (selectedCard instanceof SpellCard) {
+					changeState(5);
 				}
 			}
 		});
@@ -687,6 +720,9 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p2ActiveUnits[0];
 					toggleDefend(unit, panel2_1);
 				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
+				}
 			}
 		});
 		panel2_1.setBounds(820, 80, 140, 140);
@@ -708,6 +744,9 @@ public class GameGUI extends JFrame {
 				if (gameState == 4 && !playerTurn) {
 					UnitCard unit = p2ActiveUnits[1];
 					toggleDefend(unit, panel2_2);
+				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
 				}
 			}
 		});
@@ -731,6 +770,9 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p2ActiveUnits[2];
 					toggleDefend(unit, panel2_3);
 				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
+				}
 			}
 		});
 		panel2_3.setBounds(820, 440, 140, 140);
@@ -753,6 +795,9 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p2ActiveUnits[3];
 					toggleDefend(unit, panel2_4);
 				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
+				}
 			}
 		});
 		panel2_4.setBounds(820, 620, 140, 140);
@@ -773,6 +818,9 @@ public class GameGUI extends JFrame {
 				if (gameState == 4 && !playerTurn) {
 					UnitCard unit = p2ActiveUnits[4];
 					toggleDefend(unit, panel2_5);
+				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
 				}
 			}
 		});
@@ -796,6 +844,9 @@ public class GameGUI extends JFrame {
 					UnitCard unit = p2ActiveUnits[5];
 					toggleDefend(unit, panel2_6);
 				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
+				}
 			}
 		});
 		panel2_6.setBounds(640, 260, 140, 140);
@@ -818,6 +869,9 @@ public class GameGUI extends JFrame {
 				if (gameState == 4 && !playerTurn) {
 					UnitCard unit = p2ActiveUnits[6];
 					toggleDefend(unit, panel2_7);
+				}
+				if (gameState == 5 && !playerTurn) {
+					castSpell();
 				}
 			}
 		});
@@ -945,8 +999,40 @@ public class GameGUI extends JFrame {
 				}
 				gameState = 4;
 				break;
-			case 5: //gameState 5 is game end mode - display winner, no one can make moves.
+			
+			case 5: // Gamestate 5 is casting spell mode - player will cast a spell on a single/multiple targets depending on the spell selected
+				lblInstructions.setText("Select a target according to your spell.");
+				if (playerTurn) {
+					// Player1's buttons
+					listHand1.setVisible(true);
+					btnUseCard1.setEnabled(true);
+					btnEndTurn1.setEnabled(true);
+					btnAttack1.setEnabled(true);
+					btnAttack1.setText("Cast spell");
+					listHand1.setVisible(true);
+					// Player2's buttons
+					listHand2.setVisible(false);
+					btnUseCard2.setEnabled(false);
+					btnEndTurn2.setEnabled(false);
+					btnAttack2.setEnabled(false);
+				} else {
+					// Player2's buttons
+					listHand2.setVisible(true);
+					btnUseCard2.setEnabled(true);
+					btnEndTurn2.setEnabled(true);
+					btnAttack2.setEnabled(true);
+					btnAttack2.setText("Cast spell");
+					// Player1's buttons
+					listHand1.setVisible(false);
+					btnUseCard1.setEnabled(false);
+					btnEndTurn1.setEnabled(false);
+					btnAttack1.setEnabled(false);
+					listHand1.setVisible(false);
+				}
+				gameState = 5;
 				break;
+			case 6: //gameState 6 is game end mode - display winner, no one can make moves.
+				break; 
 			default:
 				break;
 		}
@@ -985,16 +1071,16 @@ public class GameGUI extends JFrame {
 				addCardToPanel(p);
 			}
 			}
+		}
 			
-			// Conditionals for if the selectedCard is a SpellCard
+		// Method called when player is using a spell card
+		public void castSpell() {
 			if (selectedCard instanceof SpellCard) { // Adds spell card to active hand
 				SpellCard spellCard = (SpellCard) selectedCard;
 				
 				// Player 1 using spell card
-				if(gameState == 3 && playerTurn && p1.getMana()>= spellCard.getCost()) {
-					btnAttack1.setText("Cast Spell");
-					
-					// Player 1 using targeting Single Target
+				if(gameState == 5 && playerTurn && p1.getMana()>= spellCard.getCost()) {
+					// Player 1 targeting a Single Target
 					if(spellCard.getTargetType().equals("SingleTarget")){
 						lblInstructions.setText("Select a single enemy unit to Cast Spell on.");
 						for (UnitCard unitCard: p2ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
@@ -1007,6 +1093,7 @@ public class GameGUI extends JFrame {
 										spellCard.activate(targetUnit, null, p2, textAreaInfo1);
 										p1.useMana(spellCard.getCost());
 										lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+										panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 									}
 							});
 							}
@@ -1015,7 +1102,7 @@ public class GameGUI extends JFrame {
 					// Player 1 targeting Player 2
 					else if(spellCard.getTargetType().equals("PlayerTarget")) {
 						lblInstructions.setText("Spell will be casted on enemy player if used.");
-						btnAttack1.setText("Cast Spell on Player");
+						//btnAttack1.setText("Cast Spell on Player");
 						btnAttack1.addActionListener(new ActionListener(){
 							@Override
 							public void actionPerformed(ActionEvent e) {
@@ -1039,6 +1126,8 @@ public class GameGUI extends JFrame {
 									public void mouseClicked(MouseEvent e) {
 										UnitCard targetUnit = unitCard;
 										selectedTargets.add(targetUnit); // adds selected unit to list
+										panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+
 										if (selectedTargets.size() <= p2ActiveUnits.length) {
 											spellCard.activate(null, selectedTargets, p2, textAreaInfo1);
 											p1.useMana(spellCard.getCost());
@@ -1053,22 +1142,23 @@ public class GameGUI extends JFrame {
 					
 				
 				// Player 2 using a spell card	
-				} else if (gameState == 3 && playerTurn == false && p2.getMana() >= spellCard.getCost()) {
+				} else if (gameState == 5 && playerTurn == false && p2.getMana() >= spellCard.getCost()) {
 						btnAttack2.setText("Cast Spell");
 						
-						// Player 2 using targeting Single Target
+						// Player 2 targeting a Single Target
 						if(spellCard.getTargetType().equals("SingleTarget")){
 							lblInstructions.setText("Select a single enemy unit to Cast Spell on");
 							for (UnitCard unitCard: p1ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
 								JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard); // checks if the UnitCard is on JPanel
 								if (panelWithUnitCard != null) {
-									panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard
+									panelWithUnitCard.addMouseListener(new MouseAdapter() { // Assigns the mouseListener to the Panel with the UnitCard	
 										@Override
 										public void mouseClicked(MouseEvent e) {
 											UnitCard targetUnit = unitCard;
 											spellCard.activate(targetUnit, null, p1, textAreaInfo2);
 											p2.useMana(spellCard.getCost());
 											lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+											panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 										}
 								});
 								}
@@ -1077,7 +1167,7 @@ public class GameGUI extends JFrame {
 						// Player 2 targeting Player 1
 						else if(spellCard.getTargetType().equals("PlayerTarget")) {
 							lblInstructions.setText("Spell will be casted on enemy player if used.");
-							btnAttack2.setText("Cast Spell on Player");
+							//btnAttack2.setText("Cast Spell on Player");
 							btnAttack2.addActionListener(new ActionListener(){
 								@Override
 								public void actionPerformed(ActionEvent e) {
@@ -1101,6 +1191,7 @@ public class GameGUI extends JFrame {
 										public void mouseClicked(MouseEvent e) {
 											UnitCard targetUnit = unitCard;
 											selectedTargets.add(targetUnit); // adds selected unit to list
+											panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 											if (selectedTargets.size() <= p1ActiveUnits.length) {
 												spellCard.activate(null, selectedTargets, p1, textAreaInfo2);
 												p2.useMana(spellCard.getCost());
@@ -1152,6 +1243,19 @@ public class GameGUI extends JFrame {
 			}
 		}
 	}
+	
+//	// Method to toggle JPanel color when selecting targets during spell casting
+//	public void toggleSpellTarget(JPanel panel) {
+//	    if (gameState == 5 && playerTurn) { 
+//	        // Toggle border color of the panel when clicked
+//	        if (panel.getBorder() != null && ((javax.swing.border.LineBorder) panel.getBorder()).getLineColor().equals(Color.RED)) {
+//	            panel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
+//	        } else {
+//	            panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+//	        }
+//	    }
+//	}
+
 	
 	// Method to find the panel containing a given UnitCard
 	private JPanel getPanelWithUnitCard(UnitCard unitCard) {
@@ -1212,6 +1316,7 @@ public class GameGUI extends JFrame {
         panel.setBorder(BorderFactory.createLineBorder(unit.isAttacking() ? Color.red : Color.black));
         // You can add more GUI elements here, like labels for HP, attack values, etc.
     }// Utility method to get the panel corresponding to a unit index
+    
     private JPanel getUnitPanel(int index, String panelPrefix) {
         String panelName = panelPrefix + (index + 1);
         for (Component comp : getContentPane().getComponents()) {
@@ -1224,7 +1329,8 @@ public class GameGUI extends JFrame {
         System.out.println("Debug: getUnitPanel returned null for " + panelName);
         return null;
     }
-	// Updates the panels where units are displayed based on their current state
+	
+    // Updates the panels where units are displayed based on their current state
     private void updateUnitPanels(UnitCard[] activeUnits, boolean isPlayerOne) {
         String panelPrefix = isPlayerOne ? "panel1" : "panel2";
         for (int i = 0; i < activeUnits.length; i++) {
