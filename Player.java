@@ -28,7 +28,12 @@ public class Player extends UnitCard {
 				added = false;
 				for(Card card : allCards) {
 					if(card.getName().equals(cardName)) {
-						deck.add(card);
+						if (card instanceof UnitCard) {
+							deck.add(new UnitCard((UnitCard) card));
+						}
+						else {
+							deck.add(card);
+						}
 						added = true;
 					}
 				}
