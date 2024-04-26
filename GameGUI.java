@@ -349,7 +349,6 @@ public class GameGUI extends JFrame {
 		
 		//player 1's board panels
 		JPanel panel1_1 = new JPanel();
-		panel1_1.setName("panel11");
 		panel1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -1333,13 +1332,12 @@ public class GameGUI extends JFrame {
     private JPanel getUnitPanel(int index, String panelPrefix) {
         String panelName = panelPrefix + (index + 1);
         for (Component comp : getContentPane().getComponents()) {
+
 //        	System.out.println(comp.getName());
             if (comp instanceof JPanel && comp.getName() != null && comp.getName().equals(panelName)) {
-            	System.out.println("Debug: getUnitPanel returned " + panelName);
                 return (JPanel) comp;
             }
         }
-        System.out.println("Debug: getUnitPanel returned null for " + panelName);
         return null;
     }
 	
