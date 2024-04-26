@@ -281,6 +281,8 @@ public class GameGUI extends JFrame {
 								hitsFace = false; //if there is at least one defender, attacker will not hit player
 								textAreaLog.append(defUnit.getName() + " defends against " + activeAttacker.getName() + "\n");
 								//Deal and take damage to active attacking unit
+								defUnit.takeDamage(activeAttacker.getAttack(), textAreaLog);
+								activeAttacker.takeDamage(defUnit.getAttack(), textAreaLog);
 								defUnit.setAttacking(false);
 								defUnit.setCanAttack(false);
 								attackingUnits.remove(activeAttacker);
