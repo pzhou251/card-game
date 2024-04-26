@@ -1347,7 +1347,7 @@ public class GameGUI extends JFrame {
 	 // Update the display of a unit on a given panel
     private void updateUnitDisplay(JPanel panel, UnitCard unit) {
         // Ideally, this method should be adjusted based on how you want to display unit details
-        panel.setBorder(BorderFactory.createLineBorder(unit.isAttacking() ? Color.red : Color.black));
+        panel.setBorder(BorderFactory.createLineBorder(unit.canAttack() ? Color.black : Color.blue));
         // You can add more GUI elements here, like labels for HP, attack values, etc.
     }// Utility method to get the panel corresponding to a unit index
     
