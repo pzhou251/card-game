@@ -228,8 +228,8 @@ public class GameGUI extends JFrame {
 				try {
 					String[] nameSplit = listHand1.getSelectedValue().split(" - ");
 					String name = nameSplit[0];
-					System.out.println(name);
-					for(Card card : allCards) {
+//					System.out.println(name);
+					for(Card card : p1.getHand()) {
 						if(card.getName().equals(name)) {
 							selectedCard = card;
 						}
@@ -386,6 +386,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel1_2 = new JPanel();
+		panel1_2.setName("panel12");
 		panel1_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -412,6 +413,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel1_3 = new JPanel();
+		panel1_3.setName("panel13");
 		panel1_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -438,6 +440,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel1_4 = new JPanel();
+		panel1_4.setName("panel14");
 		panel1_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -463,6 +466,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel1_4);
 		
 		JPanel panel1_5 = new JPanel();
+		panel1_5.setName("panel15");
 		panel1_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -488,6 +492,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel1_5);
 		
 		JPanel panel1_6 = new JPanel();
+		panel1_6.setName("panel16");
 		panel1_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -534,6 +539,7 @@ public class GameGUI extends JFrame {
 			}
 		});
 		panel1_7.setBounds(420, 440, 140, 140);
+		panel1_7.setName("panel17");
 		panel1_7.setBorder(BorderFactory.createLineBorder(Color.black));
 		contentPane.add(panel1_7);
 		
@@ -581,8 +587,8 @@ public class GameGUI extends JFrame {
 				try {
 					String[] nameSplit = listHand2.getSelectedValue().split(" - ");
 					String name = nameSplit[0];
-					System.out.println(name);
-					for(Card card : allCards) {
+//					System.out.println(name);
+					for(Card card : p2.getHand()) {
 						if(card.getName().equals(name)) {
 							selectedCard = card;
 						}
@@ -694,7 +700,7 @@ public class GameGUI extends JFrame {
 				for(UnitCard unit : p2ActiveUnits) {
 					if(unit != null) {
 						unit.setCanAttack(true);
-						System.out.println(unit.getName() + " can attack");
+//						System.out.println(unit.getName() + " can attack");
 					}
 				}
 				refresh();
@@ -706,6 +712,7 @@ public class GameGUI extends JFrame {
 		
 		//player 2's panels on board
 		JPanel panel2_1 = new JPanel();
+		panel2_1.setName("panel21");
 		panel2_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -731,6 +738,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_2 = new JPanel();
+		panel2_2.setName("panel22");
 		panel2_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -756,6 +764,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_3 = new JPanel();
+		panel2_3.setName("panel23");
 		panel2_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -781,6 +790,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_4 = new JPanel();
+		panel2_4.setName("panel24");
 		panel2_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -805,6 +815,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel2_4);
 		
 		JPanel panel2_5 = new JPanel();
+		panel2_5.setName("panel25");
 		panel2_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -830,6 +841,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_6 = new JPanel();
+		panel2_6.setName("panel26");
 		panel2_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -855,10 +867,11 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_7 = new JPanel();
+		panel2_7.setName("panel27");
 		panel2_7.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(playerTurn);
+//				System.out.println(playerTurn);
 				if (gameState == 2 && !playerTurn) {
 					playCard(panel2_7,6);
 				}
@@ -1320,7 +1333,7 @@ public class GameGUI extends JFrame {
     private JPanel getUnitPanel(int index, String panelPrefix) {
         String panelName = panelPrefix + (index + 1);
         for (Component comp : getContentPane().getComponents()) {
-        	System.out.println(comp.getName());
+//        	System.out.println(comp.getName());
             if (comp instanceof JPanel && comp.getName() != null && comp.getName().equals(panelName)) {
             	System.out.println("Debug: getUnitPanel returned " + panelName);
                 return (JPanel) comp;
@@ -1336,7 +1349,8 @@ public class GameGUI extends JFrame {
         for (int i = 0; i < activeUnits.length; i++) {
             UnitCard unit = activeUnits[i];
             JPanel panel = getUnitPanel(i, panelPrefix); // Fetch the correct panel for each unit based on its index
-            if (unit == null || (unit != null && unit.getHp() <= 0)) {
+            if ((unit != null && unit.getHp() <= 0)) {
+//            	System.out.println(unit.getName() + " has " + unit.getHp() + " ... Removing");
                 // If no unit is assigned to this slot or the unit is dead, clear the panel
                 if (panel != null) {
                     panel.removeAll();
@@ -1345,7 +1359,7 @@ public class GameGUI extends JFrame {
                     panel.setBorder(BorderFactory.createLineBorder(Color.black)); // Reset the border
                 }
                 activeUnits[i] = null; // Remove dead or null units from the array
-            } else {
+            } else if (unit != null){
                 // If the unit is alive, update its display
                 updateUnitDisplay(panel, unit);
             }

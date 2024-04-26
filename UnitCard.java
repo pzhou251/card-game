@@ -64,6 +64,16 @@ public class UnitCard extends Card {
 		}
 	}
 	
+	public UnitCard(UnitCard card) {
+		this.name = card.getName();
+		this.attack = card.getAttack();
+		this.hp = card.getHp();
+		this.maxHP = card.getMaxHp();
+		this.cost = card.getCost();
+		this.description = card.getDescription();
+		this.faction = "";
+	}
+	
 	//Mutators
 	public int getHp() {
 		return hp;
