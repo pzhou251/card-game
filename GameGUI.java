@@ -229,7 +229,7 @@ public class GameGUI extends JFrame {
 					String[] nameSplit = listHand1.getSelectedValue().split(" - ");
 					String name = nameSplit[0];
 					System.out.println(name);
-					for(Card card : allCards) {
+					for(Card card : p1.getHand()) {
 						if(card.getName().equals(name)) {
 							selectedCard = card;
 						}
@@ -590,7 +590,7 @@ public class GameGUI extends JFrame {
 					String[] nameSplit = listHand2.getSelectedValue().split(" - ");
 					String name = nameSplit[0];
 					System.out.println(name);
-					for(Card card : allCards) {
+					for(Card card : p2.getHand()) {
 						if(card.getName().equals(name)) {
 							selectedCard = card;
 						}
