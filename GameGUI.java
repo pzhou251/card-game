@@ -1341,6 +1341,15 @@ public class GameGUI extends JFrame {
         }
         return null;
     }
+    
+    public CardJPanel getCardPanel(JPanel p) {
+    	for(Component comp : p.getComponents()) {
+    		if(comp instanceof CardJPanel) {
+    			return (CardJPanel) comp;
+    		}
+    	}
+    	return null;
+    }
 	
     // Updates the panels where units are displayed based on their current state
     private void updateUnitPanels(UnitCard[] activeUnits, boolean isPlayerOne) {
@@ -1359,6 +1368,8 @@ public class GameGUI extends JFrame {
                 activeUnits[i] = null; // Remove dead or null units from the array
             } else if (unit != null){
                 // If the unit is alive, update its display
+                CardJPanel cardPanel = getCardPanel(panel);
+                cardPanel.refreshHp();
                 updateUnitDisplay(panel, unit);
             }
         }

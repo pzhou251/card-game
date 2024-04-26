@@ -29,6 +29,8 @@ public class CardJPanel extends JPanel {
 	private int width;
 	private int height;
 	
+	private JLabel lblHP;
+	
 	
 
 	/**
@@ -57,6 +59,7 @@ public class CardJPanel extends JPanel {
 		panel.add(lblCardAttack);
 		
 		JLabel lblCardHP = new JLabel("HP: " + String.valueOf((unit.getHp())) + "/" + String.valueOf((unit.getMaxHp())));
+		lblHP = lblCardHP;
 		lblCardHP.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCardHP.setBounds(0, 32, 140, 16);
 		panel.add(lblCardHP);
@@ -81,5 +84,15 @@ public class CardJPanel extends JPanel {
 	
 	public Card getCard() {
 		return this.card;
+	}
+	
+	public void refreshHp() {
+		UnitCard unit = null;
+		if(card instanceof UnitCard) {
+			unit = (UnitCard) card;
+		}
+		if(unit != null) {
+			lblHP.setText("HP: " + String.valueOf((unit.getHp())) + "/" + String.valueOf((unit.getMaxHp())));
+		}
 	}
 }
