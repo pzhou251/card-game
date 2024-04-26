@@ -1312,7 +1312,26 @@ public class GameGUI extends JFrame {
         // Update unit panels for both players
         updateUnitPanels(p1ActiveUnits, true); // Update Player 1's panels
         updateUnitPanels(p2ActiveUnits, false); // Update Player 2's panels
-
+        
+        // Janky end game implementation
+        String endMsg = null;
+        if(p2.getHp() <= 0) {
+        	endMsg = "Player 1 wins!";
+        }
+        else if(p1.getHp() <= 0) {
+        	endMsg = "Player 2 wins!";
+        }
+        if(endMsg != null) {
+        	contentPane.removeAll();
+        	contentPane.revalidate();
+        	contentPane.repaint();
+        	
+    		lblInstructions = new JLabel(endMsg);
+    		lblInstructions.setHorizontalAlignment(SwingConstants.CENTER);
+    		lblInstructions.setBounds(420, 37, 360, 16);
+    		contentPane.add(lblInstructions);
+        }
+        
         // Print refresh status to console for debugging
         System.out.println("GUI Refreshed");
     }
