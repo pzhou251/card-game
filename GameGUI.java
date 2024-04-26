@@ -349,6 +349,7 @@ public class GameGUI extends JFrame {
 		
 		//player 1's board panels
 		JPanel panel1_1 = new JPanel();
+		panel1_1.setName("panel11");
 		panel1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
