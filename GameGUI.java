@@ -1332,6 +1332,7 @@ public class GameGUI extends JFrame {
         // You can add more GUI elements here, like labels for HP, attack values, etc.
     }// Utility method to get the panel corresponding to a unit index
     
+    //Returns JPanel with unit in it
     private JPanel getUnitPanel(int index, String panelPrefix) {
         String panelName = panelPrefix + (index + 1);
         for (Component comp : getContentPane().getComponents()) {
@@ -1342,6 +1343,7 @@ public class GameGUI extends JFrame {
         return null;
     }
     
+    //Returns CardJPanel in JPanel
     public CardJPanel getCardPanel(JPanel p) {
     	for(Component comp : p.getComponents()) {
     		if(comp instanceof CardJPanel) {

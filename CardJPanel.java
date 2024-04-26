@@ -86,6 +86,7 @@ public class CardJPanel extends JPanel {
 		return this.card;
 	}
 	
+	//Refreshes HP label of CardJPanel
 	public void refreshHp() {
 		UnitCard unit = null;
 		if(card instanceof UnitCard) {
