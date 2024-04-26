@@ -349,6 +349,7 @@ public class GameGUI extends JFrame {
 		
 		//player 1's board panels
 		JPanel panel1_1 = new JPanel();
+		panel1_1.setName("panel11");
 		panel1_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -385,6 +386,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel1_2 = new JPanel();
+		panel1_2.setName("panel12");
 		panel1_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -411,6 +413,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel1_3 = new JPanel();
+		panel1_3.setName("panel13");
 		panel1_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -437,6 +440,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel1_4 = new JPanel();
+		panel1_4.setName("panel14");
 		panel1_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -462,6 +466,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel1_4);
 		
 		JPanel panel1_5 = new JPanel();
+		panel1_5.setName("panel15");
 		panel1_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -487,6 +492,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel1_5);
 		
 		JPanel panel1_6 = new JPanel();
+		panel1_6.setName("panel16");
 		panel1_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -512,6 +518,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel1_6);
 		
 		JPanel panel1_7 = new JPanel();
+		panel1_7.setName("panel17");
 		panel1_7.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -705,6 +712,7 @@ public class GameGUI extends JFrame {
 		
 		//player 2's panels on board
 		JPanel panel2_1 = new JPanel();
+		panel2_1.setName("panel21");
 		panel2_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -730,6 +738,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_2 = new JPanel();
+		panel2_2.setName("panel22");
 		panel2_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -755,6 +764,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_3 = new JPanel();
+		panel2_3.setName("panel23");
 		panel2_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -780,6 +790,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_4 = new JPanel();
+		panel2_4.setName("panel24");
 		panel2_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -804,6 +815,7 @@ public class GameGUI extends JFrame {
 		contentPane.add(panel2_4);
 		
 		JPanel panel2_5 = new JPanel();
+		panel2_5.setName("panel25");
 		panel2_5.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -829,6 +841,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_6 = new JPanel();
+		panel2_6.setName("panel26");
 		panel2_6.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -854,6 +867,7 @@ public class GameGUI extends JFrame {
 		
 		
 		JPanel panel2_7 = new JPanel();
+		panel2_7.setName("panel27");
 		panel2_7.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -1332,7 +1346,7 @@ public class GameGUI extends JFrame {
         for (int i = 0; i < activeUnits.length; i++) {
             UnitCard unit = activeUnits[i];
             JPanel panel = getUnitPanel(i, panelPrefix); // Fetch the correct panel for each unit based on its index
-            if (unit == null || (unit != null && unit.getHp() <= 0)) {
+            if (  (unit != null && unit.getHp() <= 0)) {
                 // If no unit is assigned to this slot or the unit is dead, clear the panel
                 if (panel != null) {
                     panel.removeAll();
@@ -1341,7 +1355,7 @@ public class GameGUI extends JFrame {
                     panel.setBorder(BorderFactory.createLineBorder(Color.black)); // Reset the border
                 }
                 activeUnits[i] = null; // Remove dead or null units from the array
-            } else {
+            } else if (unit != null){
                 // If the unit is alive, update its display
                 updateUnitDisplay(panel, unit);
             }
