@@ -1409,20 +1409,22 @@ public class GameGUI extends JFrame {
 				lblInstructions.setText("Spell will be casted on enemy player when used.");
 				// Player 1	targeting player 2
 				if (playerTurn) {
-					p2.takeDamage(spellCard.getPower());
-					p1.useMana(spellCard.getCost());
-					textAreaLog.append("Player 2 has taken " + spellCard.getPower() + " damage from " + spellCard.getName() + "\n");
-					
 					if (playerTurn) { //player 1's turn
 						hand1.remove(selectedCard);
 						listHand1.setListData(p1.getHandNamesArray());
 						textAreaInfo1.setText("");
+						textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
 					}
 					else { //player 2's turn
 						hand2.remove(selectedCard);
 						listHand2.setListData(p2.getHandNamesArray());
 						textAreaInfo2.setText("");
+						textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
 					}
+					
+					p2.takeDamage(spellCard.getPower());
+					p1.useMana(spellCard.getCost());
+					textAreaLog.append("Player 2 has taken " + spellCard.getPower() + " damage from " + spellCard.getName() + "\n");
 					
 					selectedCard = null;
 					changeState(1);
@@ -1440,20 +1442,22 @@ public class GameGUI extends JFrame {
 					} 
 				// Player 2 targeting player 1
 				else {
-					p1.takeDamage(spellCard.getPower());
-					p2.useMana(spellCard.getCost());
-					textAreaLog.append("Player 1 has taken " + spellCard.getPower() + " damage from " + spellCard.getName() + "\n");
-					
 					if (playerTurn) { //player 1's turn
 						hand1.remove(selectedCard);
 						listHand1.setListData(p1.getHandNamesArray());
 						textAreaInfo1.setText("");
+						textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
 					}
 					else { //player 2's turn
 						hand2.remove(selectedCard);
 						listHand2.setListData(p2.getHandNamesArray());
 						textAreaInfo2.setText("");
+						textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
 					}
+					
+					p1.takeDamage(spellCard.getPower());
+					p2.useMana(spellCard.getCost());
+					textAreaLog.append("Player 1 has taken " + spellCard.getPower() + " damage from " + spellCard.getName() + "\n");
 					
 					selectedCard = null;
 					changeState(1);
@@ -1475,6 +1479,19 @@ public class GameGUI extends JFrame {
 			case "MultiTarget":
 				lblInstructions.setText("Select described number of enemy units.");
 				// Player 1 selecting multiple targets
+				if (playerTurn) { //player 1's turn
+					hand1.remove(selectedCard);
+					listHand1.setListData(p1.getHandNamesArray());
+					textAreaInfo1.setText("");
+					textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
+				}
+				else { //player 2's turn
+					hand2.remove(selectedCard);
+					listHand2.setListData(p2.getHandNamesArray());
+					textAreaInfo2.setText("");
+					textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
+				}
+				
 				if (playerTurn) {
 					p1.useMana(spellCard.getCost());
 					for(UnitCard unit : p2ActiveUnits) {
@@ -1529,18 +1546,6 @@ public class GameGUI extends JFrame {
 //							});
 //						}
 //					}
-				}
-				if (playerTurn) { //player 1's turn
-					hand1.remove(selectedCard);
-					listHand1.setListData(p1.getHandNamesArray());
-					textAreaInfo1.setText("");
-					textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
-				}
-				else { //player 2's turn
-					hand2.remove(selectedCard);
-					listHand2.setListData(p2.getHandNamesArray());
-					textAreaInfo2.setText("");
-					textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
 				}
 				
 				selectedCard = null;
