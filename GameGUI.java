@@ -185,6 +185,7 @@ public class GameGUI extends JFrame {
 		
 		
 		textAreaLog = new JTextArea();
+		textAreaLog.setEditable(false);
 		JScrollPane scrollPaneLog = new JScrollPane(textAreaLog);
 		scrollPaneLog.setBounds(420, 640, 360, 120);
 		contentPane.add(scrollPaneLog);
@@ -248,6 +249,7 @@ public class GameGUI extends JFrame {
 		
 		//displays the card info that is selected in the hand
 		textAreaInfo1 = new JTextArea();	
+		textAreaInfo1.setEditable(false);
 		textAreaInfo1.setLineWrap(true);
 		textAreaInfo1.setWrapStyleWord(true);
 		JScrollPane scrollPaneCard1 = new JScrollPane(textAreaInfo1);
@@ -648,6 +650,7 @@ public class GameGUI extends JFrame {
 		
 		//displays info about a selected card in hand
 		textAreaInfo2 = new JTextArea();
+		textAreaInfo2.setEditable(false);
 		textAreaInfo2.setWrapStyleWord(true);
 		textAreaInfo2.setLineWrap(true);
 		JScrollPane scrollPaneInfo2 = new JScrollPane(textAreaInfo2);
