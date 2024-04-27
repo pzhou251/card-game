@@ -82,11 +82,16 @@ public class CardJPanel extends JPanel {
 		
 	}
 	
+	//getter
 	public Card getCard() {
 		return this.card;
 	}
 	
-	//Refreshes HP label of CardJPanel
+	/* 
+	 * Refreshes HP label of CardJPanel
+     * Pre-Condition: none
+     * Post-Condition: changes HP label to current
+     */
 	public void refreshHp() {
 		UnitCard unit = null;
 		if(card instanceof UnitCard) {

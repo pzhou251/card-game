@@ -37,22 +37,15 @@ public class SpellCard extends Card {
 			System.err.println(e.getMessage());;
 		}
 	}
-	
-	
-	
-	public int getPower() {
-		return power;
-	}
 
 
 
-	public void setPower(int power) {
-		this.power = power;
-	}
-
-
-
-	// Activates the SpellCard depending on the type of target
+	/* 
+	 * Method activates the SpellCard depending on the type of target
+     * Pre-Condition: takes various items based on target: UnitCard target for a singletarget attack, ArrayList of UnitCards targets for multitarget attacks,
+     * 					Player opponent for playertarget attack. Also takes a JTextArea to write output to.
+     * Post-Condition: Returns nothing, but calls different method based on spell's target type.
+     */
 	public void activate(UnitCard target, ArrayList<UnitCard> targets,Player opponent, JTextArea output) {
 		targetType = this.targetType;
 		
@@ -69,16 +62,18 @@ public class SpellCard extends Card {
 				playerTarget(opponent, output);
 				break;
 			
-//			case "GeneralEffect":
-				
-//				break;
 			default:
 				output.setText("Invalid target type");
 				break;
 				
 		}
 	}
-	// Method called if single target
+	
+	/* 
+	 * Method called if single target, causes damage to a single unit and writes to log
+     * Pre-Condition: takes a UnitCard targetUnit and a JTextArea to log result
+     * Post-Condition: Returns nothing, but causes damage and writes to log
+     */
 	private void singleTarget(UnitCard targetUnit, JTextArea output) {
 		int damage = this.power; // power = damage of the spell
 		boolean targetDestroyed = targetUnit.takeDamage(damage, output); 
@@ -91,7 +86,11 @@ public class SpellCard extends Card {
 		
 	}
 	
-	// Method called if target player
+	/* 
+	 * Method called if targeting a player, causes damage to the player and writes to log
+     * Pre-Condition: takes a Player opponent and a JTextArea to log result
+     * Post-Condition: Returns nothing, but causes damage and writes to log
+     */
 	private void playerTarget(Player opponent, JTextArea output) {
 		int damage = this.power;
 		boolean targetDestroyed = opponent.takeDamage(damage, output);
@@ -103,7 +102,11 @@ public class SpellCard extends Card {
 		}
 	}
 	
-	// Method called if there are multiple targets
+	/* 
+	 * Method called if multi target, causes damage to all units in arraylist and writes to log
+     * Pre-Condition: takes a UnitCard ArrayList targets and a JTextArea to log result
+     * Post-Condition: Returns nothing, but causes damage and writes to log
+     */
 	private void multiTarget(ArrayList<UnitCard> targets, JTextArea output) {
 		int damage = this.power;
 		boolean anyTargetDestroyed = false;
@@ -134,13 +137,23 @@ public class SpellCard extends Card {
 		this.targetType = targetType;
 	}
 	
+	public int getPower() {
+		return power;
+	}
+
+	public void setPower(int power) {
+		this.power = power;
+	}
+	
+	/* 
+	 * Method prints card info to console for debugging
+     * Pre-Condition: none
+     * Post-Condition: prints to console
+     */
 	public void print() {
 		super.print();
 		System.out.print(" effect: " + effect + "\n");
 		System.out.print(" target type: " + targetType + "\n");
 	}
 	
-	public static void main(String[] args) {
-
-	}
 }

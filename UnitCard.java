@@ -10,18 +10,17 @@ public class UnitCard extends Card {
 	protected int hp;
 	protected int maxHP;
 	protected String faction;
-//	ArrayList<String> effects = new ArrayList<>(); //Could create subclass of effects?
 	protected boolean canAttack = false; //Units cannot attack the turn they're summoned
 	protected boolean isAttacking = false;
-//	protected JTextArea output; //Could add output as variable to UnitCard for ease of use.
-//	protected String targetType;
-	//CSV: name,cost,attack,maxHP,faction?,keywords?
-		
+
+	
+	//Constructors
 	public UnitCard(int hp) {
 		this.hp = hp;
 		this.maxHP = hp;
 	}
 	
+	//CSV: name,cost,attack,maxHP,faction?,keywords?
 	public UnitCard(String path, int row) {
 		String line;
 		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
@@ -37,7 +36,7 @@ public class UnitCard extends Card {
 			this.hp = maxHP;
 			this.faction = stats[4];
 			
-			if(!stats[5].equals("None")) { //If there is any effects
+			if(!stats[5].equals("None")) { //If there are any effects
 				String effects[] = stats[5].split(":");
 				
 				for(String effect : effects) {
@@ -74,7 +73,7 @@ public class UnitCard extends Card {
 		this.faction = "";
 	}
 	
-	//Mutators
+	// Getters/Setters
 	public int getHp() {
 		return hp;
 	}
@@ -99,24 +98,6 @@ public class UnitCard extends Card {
 		this.attack = attack;
 	}
 	
-//	public String getTargetType(){
-//		return targetType;
-//	}
-//	public void setTargetType(String targetType) {
-//		this.targetType = targetType;
-//	}
-	
-	//UnitCard gains attack equal to int attack
-	public void addAttack(int attack) {
-		this.attack += attack;
-	}
-	
-	//UnitCard gains both hp and maxHP equal to int health
-	public void addHealth(int health) {
-		this.maxHP += health;
-		this.hp += health;
-	}
-	
 	public boolean canAttack() {
 		return canAttack;
 	}
@@ -124,7 +105,7 @@ public class UnitCard extends Card {
 	public void setCanAttack(boolean canAttack) {
 		this.canAttack = canAttack;
 	}
-
+	
 	public boolean isAttacking() {
 		return isAttacking;
 	}
@@ -132,8 +113,33 @@ public class UnitCard extends Card {
 	public void setAttacking(boolean isAttacking) {
 		this.isAttacking = isAttacking;
 	}
+	
+	
+	/* 
+	 * UnitCard gains attack equal to int attack
+     * Pre-Condition: takes an int attack value
+     * Post-Condition: Returns nothing, but adds attack argument to the UnitCard's attack value
+     */
+	public void addAttack(int attack) {
+		this.attack += attack;
+	}
+	
+	/* 
+	 * UnitCard gains both hp and maxHP equal to int health
+     * Pre-Condition: takes an int health value
+     * Post-Condition: Returns nothing, but adds health argument to the UnitCard's health values
+     */
+	public void addHealth(int health) {
+		this.maxHP += health;
+		this.hp += health;
+	}
+	
 
-	//UnitCard heals hp equal to int health up to maxHP
+	/* 
+	 * UnitCard heals hp equal to int health up to maxHP
+     * Pre-Condition: takes an int health value
+     * Post-Condition: Returns nothing, but adds health argument to the UnitCard's health value up to maxHP
+     */
 	public void heal(int health) {
 		this.hp += health;
 		if(hp > maxHP) {
@@ -141,7 +147,11 @@ public class UnitCard extends Card {
 		}
 	}
 	
-	//UnitCard takes damage equal to int damage. Returns true if damage kills unit. Outputs log
+	/* 
+	 * UnitCard takes damage equal to int damage. Returns true if damage kills unit. Outputs log
+     * Pre-Condition: takes an int damage value and JTextArea output to log damage
+     * Post-Condition: Returns boolean of whether unit is killed, also subtracts damage from unit's hp
+     */
 	public boolean takeDamage(int damage, JTextArea output) {
 		this.hp -= damage;
 		output.append(name + " has taken " + damage + " damage.\n");
@@ -152,7 +162,11 @@ public class UnitCard extends Card {
 		return false;
 	}
 	
-	//Returns true if hp is > 0, false otherwise
+	/* 
+	 * Returns true if hp is > 0, false otherwise
+     * Pre-Condition: none
+     * Post-Condition: Returns boolean of whether unit has HP left
+     */
 	public boolean isAlive() {
 		if(hp <= 0) {
 			return false;
@@ -160,33 +174,22 @@ public class UnitCard extends Card {
 		return true;
 	}
 	
-	//UnitCard attacks target. Target takes damage equal to this card's attack. This takes damage equal to target's attack
-	//If unit dies, removes from board
-	public void attack(UnitCard target, JTextArea output) {
-		output.append(name + " has attacked " + target.getName() +".\n");
-		if(target.takeDamage(this.attack, output)) {
-//			this.remove(); //TBD
-		}
-		if(this.takeDamage(target.getAttack(), output)) {
-//			target.remove(); //TBD
-		}
-	}
-	
+	/* 
+	 * Method prints card info to console for debugging
+     * Pre-Condition: none
+     * Post-Condition: prints to console
+     */
 	public void print() {
 		super.print();
 		System.out.print(" attack: " + attack + "\n");
 		System.out.print(" hp: " + hp + "\n");
 	}
-	
-//	public static void main(String[] args) {
-//		String unitPath = "./csvs/Units.csv";
-//		String spellPath = "./csvs/Spells.csv";
-//		
-//		UnitCard wisp = new UnitCard(unitPath,1);
-//		
-//		wisp.print();
-//	}
 
+	/* 
+	 * Method displays card info in the textarea for card info
+     * Pre-Condition: JTextArea output where card info will be displayed
+     * Post-Condition: changes GUI with card info
+     */
 	public void display(JTextArea output) {
 		super.display(output);
 		output.append("Attack: " + attack + "\n");
