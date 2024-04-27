@@ -1640,6 +1640,9 @@ public class GameGUI extends JFrame {
         // Update hand list data for both players
         listHand1.setListData(p1.getHandNamesArray());
         listHand2.setListData(p2.getHandNamesArray());
+        textAreaInfo1.setText("");
+        textAreaInfo2.setText("");
+        
 
         // Update unit panels for both players
         updateUnitPanels(p1ActiveUnits, true); // Update Player 1's panels
