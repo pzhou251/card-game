@@ -1100,7 +1100,7 @@ public class GameGUI extends JFrame {
 					btnUseCard1.setEnabled(true);
 					btnEndTurn1.setEnabled(true);
 					btnAttack1.setEnabled(true);
-					btnAttack1.setText("Cast spell");
+//					btnAttack1.setText("Cast spell");
 					listHand1.setVisible(true);
 					// Player2's buttons
 					listHand2.setVisible(false);
@@ -1113,7 +1113,7 @@ public class GameGUI extends JFrame {
 					btnUseCard2.setEnabled(true);
 					btnEndTurn2.setEnabled(true);
 					btnAttack2.setEnabled(true);
-					btnAttack2.setText("Cast spell");
+//					btnAttack2.setText("Cast spell");
 					// Player1's buttons
 					listHand1.setVisible(false);
 					btnUseCard1.setEnabled(false);
@@ -1526,7 +1526,9 @@ public class GameGUI extends JFrame {
 				else {
 					p2.useMana(spellCard.getCost());
 					for(UnitCard unit : p1ActiveUnits) {
-						unit.takeDamage(spellCard.getPower(), textAreaLog);
+						if(unit != null) {
+							unit.takeDamage(spellCard.getPower(), textAreaLog);
+						}
 					}
 //					ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
 //					for (UnitCard unitCard: p1ActiveUnits) { // iterates over opponent's units on the board
