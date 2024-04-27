@@ -397,10 +397,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_1);
 				}
 				if(gameState == 5) {
-					castSpell(selectedCard, p1ActiveUnits[0]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[0] != null) {
+						castSpell(selectedCard, p1ActiveUnits[0]);
+					}
 				}
 			}
 		});
@@ -427,10 +426,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_2);
 				}
 				if(gameState == 5) {
-					castSpell(selectedCard, p1ActiveUnits[1]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[1] != null) {
+						castSpell(selectedCard, p1ActiveUnits[1]);
+					}
 				}
 
 			}
@@ -457,10 +455,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_3);
 				}
 				if(gameState == 5) {
-					castSpell(selectedCard, p1ActiveUnits[2]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[2] != null) {
+						castSpell(selectedCard, p1ActiveUnits[2]);
+					}
 				}
 
 			}
@@ -488,9 +485,9 @@ public class GameGUI extends JFrame {
 				}
 				if(gameState == 5) {
 					castSpell(selectedCard, p1ActiveUnits[3]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[3] != null) {
+						castSpell(selectedCard, p1ActiveUnits[3]);
+					}
 				}
 
 			}
@@ -516,10 +513,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_5);
 				}
 				if(gameState == 5) {
-					castSpell(selectedCard, p1ActiveUnits[4]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[4] != null) {
+						castSpell(selectedCard, p1ActiveUnits[4]);
+					}
 				}
 
 			}
@@ -545,10 +541,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_6);
 				}
 				if(gameState == 5) {
-					castSpell(selectedCard, p1ActiveUnits[5]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[5] != null) {
+						castSpell(selectedCard, p1ActiveUnits[5]);
+					}
 				}
 
 			}
@@ -574,10 +569,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_7);
 				}
 				if(gameState == 5) {
-					castSpell(selectedCard, p1ActiveUnits[6]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p1ActiveUnits[6] != null) {
+						castSpell(selectedCard, p1ActiveUnits[6]);
+					}
 				}
 
 			}
@@ -790,10 +784,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_1);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[0]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p2ActiveUnits[0] != null) {
+						castSpell(selectedCard, p2ActiveUnits[0]);
+					}
 				}
 			}
 		});
@@ -819,10 +812,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_2);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[1]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p2ActiveUnits[1] != null) {
+						castSpell(selectedCard, p2ActiveUnits[1]);
+					}
 				}
 			}
 		});
@@ -848,10 +840,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_3);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[2]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p2ActiveUnits[2] != null) {
+						castSpell(selectedCard, p2ActiveUnits[2]);
+					}
 				}
 			}
 		});
@@ -877,10 +868,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_4);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[3]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p2ActiveUnits[3] != null) {
+						castSpell(selectedCard, p2ActiveUnits[3]);
+					}
 				}
 			}
 		});
@@ -905,10 +895,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_5);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[4]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p2ActiveUnits[4] != null) {
+						castSpell(selectedCard, p2ActiveUnits[4]);
+					}
 				}
 			}
 		});
@@ -934,10 +923,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_6);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[5]);
-//					spellTargetSelection(selectedCard);
-
-					//castSpell();
+					if(p2ActiveUnits[5] != null) {
+						castSpell(selectedCard, p2ActiveUnits[5]);
+					}
 				}
 			}
 		});
@@ -964,9 +952,9 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_7);
 				}
 				if (gameState == 5) {
-					castSpell(selectedCard, p2ActiveUnits[6]);
-//					spellTargetSelection(selectedCard);
-					//castSpell();
+					if(p2ActiveUnits[6] != null) {
+						castSpell(selectedCard, p2ActiveUnits[6]);
+					}
 				}
 			}
 		});
