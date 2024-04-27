@@ -85,7 +85,7 @@ public class SpellCard extends Card {
 		if (targetDestroyed == true) {
 			output.append(effect + "\n");
 		} else {
-			output.append(this.name + " was used on " + opponent.getName() + "\n");
+			output.append(this.name + " was used on your opponent." + "\n");
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class SpellCard extends Card {
 				anyTargetDestroyed = true;
 			}
 		}
-		if (anyTargetDestroyed) {
+		if (anyTargetDestroyed == true) {
 			output.append(effect + "\n");
 		}
 		else {
