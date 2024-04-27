@@ -1200,19 +1200,20 @@ public class GameGUI extends JFrame {
 		// Method called when player is using a spell card
 		public void castSpell(Card card, UnitCard unit) {
 			if(card instanceof SpellCard) {
-				SpellCard spell = (SpellCard) card;
-				unit.takeDamage(spell.getPower(), textAreaLog);
-				
 				if (playerTurn) { //player 1's turn
 					hand1.remove(selectedCard);
 					listHand1.setListData(p1.getHandNamesArray());
 					textAreaInfo1.setText("");
+					textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
 				}
 				else { //player 2's turn
 					hand2.remove(selectedCard);
 					listHand2.setListData(p2.getHandNamesArray());
 					textAreaInfo2.setText("");
+					textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
 				}
+				SpellCard spell = (SpellCard) card;
+				unit.takeDamage(spell.getPower(), textAreaLog);
 				
 				selectedCard = null;
 				changeState(1);
