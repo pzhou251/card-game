@@ -262,8 +262,19 @@ public class GameGUI extends JFrame {
 					changeState(2);
 				}
 				if (selectedCard instanceof SpellCard) {
-					spellTargetSelection(selectedCard);
-					changeState(5);
+					SpellCard spell = (SpellCard) selectedCard;
+					if(spell.getTargetType().equals("MultiTarget") || spell.getTargetType().equals("PlayerTarget")) {
+						if(p1.getMana() >= spell.getCost()) {
+							spellTargetSelection(spell);
+						}
+						else {
+							lblInstructions.setText("Not enough mana");
+						}
+					}
+					else {
+						changeState(5);
+					}
+//					spellTargetSelection(selectedCard);
 					//castSpell();
 				}
 				
@@ -645,8 +656,19 @@ public class GameGUI extends JFrame {
 					changeState(2);
 				}
 				if (selectedCard instanceof SpellCard) {
-					spellTargetSelection(selectedCard);
-					changeState(5);
+					SpellCard spell = (SpellCard) selectedCard;
+					if(spell.getTargetType().equals("MultiTarget") || spell.getTargetType().equals("PlayerTarget")) {
+						if(p2.getMana() >= spell.getCost()) {
+							spellTargetSelection(spell);
+						}
+						else {
+							lblInstructions.setText("Not enough mana");
+						}
+					}
+					else {
+						changeState(5);
+					}
+//					spellTargetSelection(selectedCard);
 					//castSpell();
 				}
 			}
@@ -1353,82 +1375,98 @@ public class GameGUI extends JFrame {
 				lblInstructions.setText("Spell will be casted on enemy player when used.");
 				// Player 1	targeting player 2
 				if (playerTurn) {
-					btnAttack1.addActionListener(new ActionListener(){
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							spellCard.activate(null, null, p2, textAreaLog);
-							spellUsed();
-							//p1.useMana(spellCard.getCost());
-							//lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
-							//btnAttack1.setText("Attack"); // reset button back to original text after spell is used
-							btnAttack1.removeActionListener(this);
-						}
-					});
+					p2.takeDamage(spellCard.getPower());
+					p1.useMana(spellCard.getCost());
+//					btnAttack1.addActionListener(new ActionListener(){
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							spellCard.activate(null, null, p2, textAreaLog);
+//							spellUsed();
+//							//p1.useMana(spellCard.getCost());
+//							//lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+//							//btnAttack1.setText("Attack"); // reset button back to original text after spell is used
+//							btnAttack1.removeActionListener(this);
+//						}
+//					});
 					} 
 				// Player 2 targeting player 1
 				else {
-					btnAttack2.addActionListener(new ActionListener(){
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							spellCard.activate(null, null, p1, textAreaLog);
-							spellUsed();
-							//p2.useMana(spellCard.getCost());
-							//lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
-							//btnAttack2.setText("Attack"); // reset button back to original text after spell is used
-							btnAttack2.removeActionListener(this);
-						}
-					});
-				}		
+					p1.takeDamage(spellCard.getPower());
+					p2.useMana(spellCard.getCost());
+//					btnAttack2.addActionListener(new ActionListener(){
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							spellCard.activate(null, null, p1, textAreaLog);
+//							spellUsed();
+//							//p2.useMana(spellCard.getCost());
+//							//lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
+//							//btnAttack2.setText("Attack"); // reset button back to original text after spell is used
+//							btnAttack2.removeActionListener(this);
+//						}
+//					});
+				}
+				refresh();
 				break;
 		
 			case "MultiTarget":
 				lblInstructions.setText("Select described number of enemy units.");
 				// Player 1 selecting multiple targets
 				if (playerTurn) {
-					ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
-					for (UnitCard unitCard: p2ActiveUnits) { // iterates over opponent's units on the board
-						JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
-						if(panelWithUnitCard != null) {
-							panelWithUnitCard.addMouseListener(new MouseAdapter(){
-								@Override
-								public void mouseClicked(MouseEvent e) {
-									UnitCard targetUnit = unitCard;
-									selectedTargets.add(targetUnit); // adds selected unit to list
-									panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-
-									if (selectedTargets.size() <= p2ActiveUnits.length) {
-										spellCard.activate(null, selectedTargets, p2, textAreaLog);
-										//p1.useMana(spellCard.getCost());
-										//lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
-										selectedTargets.clear(); // clears list after spells are used; have it clear at end of turn or when the gui refreshes?
-									}
-								}
-							});
+					p1.useMana(spellCard.getCost());
+					for(UnitCard unit : p2ActiveUnits) {
+						if(unit != null) {
+							unit.takeDamage(spellCard.getPower(), textAreaLog);
 						}
 					}
+//					ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
+//					for (UnitCard unitCard: p2ActiveUnits) { // iterates over opponent's units on the board
+//						JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
+//						if(panelWithUnitCard != null) {
+//							panelWithUnitCard.addMouseListener(new MouseAdapter(){
+//								@Override
+//								public void mouseClicked(MouseEvent e) {
+//									UnitCard targetUnit = unitCard;
+//									selectedTargets.add(targetUnit); // adds selected unit to list
+//									panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+//
+//									if (selectedTargets.size() <= p2ActiveUnits.length) {
+//										spellCard.activate(null, selectedTargets, p2, textAreaLog);
+//										//p1.useMana(spellCard.getCost());
+//										//lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
+//										selectedTargets.clear(); // clears list after spells are used; have it clear at end of turn or when the gui refreshes?
+//									}
+//								}
+//							});
+//						}
+//					}
 				} 
 				// Player 2 selecting multiple targets
 				else {
-					ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
-					for (UnitCard unitCard: p1ActiveUnits) { // iterates over opponent's units on the board
-						JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
-						if(panelWithUnitCard != null) {
-							panelWithUnitCard.addMouseListener(new MouseAdapter(){
-								@Override
-								public void mouseClicked(MouseEvent e) {
-									UnitCard targetUnit = unitCard;
-									selectedTargets.add(targetUnit); // adds selected unit to list
-									panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-									if (selectedTargets.size() <= p1ActiveUnits.length) {
-										spellCard.activate(null, selectedTargets, p1, textAreaLog);
-										//p2.useMana(spellCard.getCost());
-										selectedTargets.clear();
-									}
-								}
-							});
-						}
+					p2.useMana(spellCard.getCost());
+					for(UnitCard unit : p1ActiveUnits) {
+						unit.takeDamage(spellCard.getPower(), textAreaLog);
 					}
+//					ArrayList<UnitCard> selectedTargets = new ArrayList<>(); // list for selected targets
+//					for (UnitCard unitCard: p1ActiveUnits) { // iterates over opponent's units on the board
+//						JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard);
+//						if(panelWithUnitCard != null) {
+//							panelWithUnitCard.addMouseListener(new MouseAdapter(){
+//								@Override
+//								public void mouseClicked(MouseEvent e) {
+//									UnitCard targetUnit = unitCard;
+//									selectedTargets.add(targetUnit); // adds selected unit to list
+//									panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+//									if (selectedTargets.size() <= p1ActiveUnits.length) {
+//										spellCard.activate(null, selectedTargets, p1, textAreaLog);
+//										//p2.useMana(spellCard.getCost());
+//										selectedTargets.clear();
+//									}
+//								}
+//							});
+//						}
+//					}
 				}
+				refresh();
 				break;
 		
 			default:

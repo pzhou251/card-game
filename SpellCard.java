@@ -38,6 +38,20 @@ public class SpellCard extends Card {
 		}
 	}
 	
+	
+	
+	public int getPower() {
+		return power;
+	}
+
+
+
+	public void setPower(int power) {
+		this.power = power;
+	}
+
+
+
 	// Activates the SpellCard depending on the type of target
 	public void activate(UnitCard target, ArrayList<UnitCard> targets,Player opponent, JTextArea output) {
 		targetType = this.targetType;
