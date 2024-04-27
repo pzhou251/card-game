@@ -395,7 +395,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_1);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[0]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -424,7 +425,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_2);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[1]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -453,7 +455,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_3);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[2]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -482,7 +485,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_4);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[3]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -510,7 +514,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_5);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[4]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -538,7 +543,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_6);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[5]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -566,7 +572,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel1_7);
 				}
 				if(gameState == 5 && playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p1ActiveUnits[6]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -780,7 +787,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_1);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[0]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -808,7 +816,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_2);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[1]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -836,7 +845,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_3);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[2]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -864,7 +874,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_4);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[3]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -891,7 +902,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_5);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[4]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -919,7 +931,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_6);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[5]);
+//					spellTargetSelection(selectedCard);
 
 					//castSpell();
 				}
@@ -948,7 +961,8 @@ public class GameGUI extends JFrame {
 					toggleDefend(unit, panel2_7);
 				}
 				if (gameState == 5 && !playerTurn) {
-					spellTargetSelection(selectedCard);
+					castSpell(selectedCard, p2ActiveUnits[6]);
+//					spellTargetSelection(selectedCard);
 					//castSpell();
 				}
 			}
@@ -1184,7 +1198,28 @@ public class GameGUI extends JFrame {
 			}
 		}
 		// Method called when player is using a spell card
-//		public void castSpell() {
+		public void castSpell(Card card, UnitCard unit) {
+			if(card instanceof SpellCard) {
+				SpellCard spell = (SpellCard) card;
+				unit.takeDamage(spell.getPower(), textAreaLog);
+				
+				if (playerTurn) { //player 1's turn
+					hand1.remove(selectedCard);
+					listHand1.setListData(p1.getHandNamesArray());
+					textAreaInfo1.setText("");
+					textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
+				}
+				else { //player 2's turn
+					hand2.remove(selectedCard);
+					listHand2.setListData(p2.getHandNamesArray());
+					textAreaInfo2.setText("");
+					textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
+				}
+				
+				selectedCard = null;
+				changeState(1);
+			}
+		}
 //			if (selectedCard instanceof SpellCard) { // Adds spell card to active hand
 //				SpellCard spellCard = (SpellCard) selectedCard;
 //				
@@ -1377,6 +1412,23 @@ public class GameGUI extends JFrame {
 				if (playerTurn) {
 					p2.takeDamage(spellCard.getPower());
 					p1.useMana(spellCard.getCost());
+					textAreaLog.append("Player 2 has taken " + spellCard.getPower() + " damage from " + spellCard.getName() + "\n");
+					
+					if (playerTurn) { //player 1's turn
+						hand1.remove(selectedCard);
+						listHand1.setListData(p1.getHandNamesArray());
+						textAreaInfo1.setText("");
+						textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
+					}
+					else { //player 2's turn
+						hand2.remove(selectedCard);
+						listHand2.setListData(p2.getHandNamesArray());
+						textAreaInfo2.setText("");
+						textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
+					}
+					
+					selectedCard = null;
+					changeState(1);
 //					btnAttack1.addActionListener(new ActionListener(){
 //						@Override
 //						public void actionPerformed(ActionEvent e) {
@@ -1393,6 +1445,23 @@ public class GameGUI extends JFrame {
 				else {
 					p1.takeDamage(spellCard.getPower());
 					p2.useMana(spellCard.getCost());
+					textAreaLog.append("Player 1 has taken " + spellCard.getPower() + " damage from " + spellCard.getName() + "\n");
+					
+					if (playerTurn) { //player 1's turn
+						hand1.remove(selectedCard);
+						listHand1.setListData(p1.getHandNamesArray());
+						textAreaInfo1.setText("");
+						textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
+					}
+					else { //player 2's turn
+						hand2.remove(selectedCard);
+						listHand2.setListData(p2.getHandNamesArray());
+						textAreaInfo2.setText("");
+						textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
+					}
+					
+					selectedCard = null;
+					changeState(1);
 //					btnAttack2.addActionListener(new ActionListener(){
 //						@Override
 //						public void actionPerformed(ActionEvent e) {
