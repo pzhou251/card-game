@@ -16,7 +16,7 @@ public class SpellCard extends Card {
 		super();
 		String line;
 		try(BufferedReader reader = new BufferedReader(new FileReader(path))){
-			for(int i = 1; i < row; i++) {
+			for(int i = 0; i < row; i++) {
 				line = reader.readLine();
 			}
 			line = reader.readLine();
