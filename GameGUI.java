@@ -312,9 +312,6 @@ public class GameGUI extends JFrame {
 					}
 					refresh();
 				}
-				else if(gameState == 5) {
-					spellUsed();
-				}
 				else {
 					changeState(3);
 				}
@@ -691,8 +688,6 @@ public class GameGUI extends JFrame {
 						changeState(4);
 					}
 					refresh();
-				} else if(gameState == 5) {
-					spellUsed();
 				}
 				else {
 					changeState(3);
@@ -1126,45 +1121,11 @@ public class GameGUI extends JFrame {
 	}
 	
 	
-	
-	//cleaning stopped here
 	/*
-	 * Method called when "Cast spell" button is clicked, subtracting the mana and updating player info
-	 * Pre-Condition: takes a JPanel p and an int index of the board position in unit array
-	 * Post-Condition: returns nothing, but changes GUI depending on user's mana and selection
+	 * Method called when player is using a single-target spell card. Removes spell card from hand, uses Mana, and causes damage to a single unit
+	 * Pre-Condition: takes a Card card that should be an instance of SpellCard, and a Unit unit that is targeted by the spell
+	 * Post-Condition: returns nothing, but changes GUI to cast spell and hurt target
 	 */
-	public void spellUsed() {
-		if (selectedCard instanceof SpellCard) {
-			SpellCard spellCard = (SpellCard) selectedCard;
-			// Stats of Players and units involved update
-			if (playerTurn) {
-				p1.useMana(spellCard.getCost());
-				lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
-				btnAttack1.setText("Attack"); // sets button back to attack
-				
-				lblHP1.setText("HP: " + p1.getHp() + "/" + p1.getMaxHp());
-		        lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
-		        lblDeck1.setText("Deck: " + p1.getDeck().size());
-		        lblArmor1.setText("Armor: " + p1.getArmor());
-		        p1.discard(spellCard);
-				
-				
-
-			} else {
-				p2.useMana(spellCard.getCost());
-				lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
-				btnAttack2.setText("Attack"); // sets button back to attack
-				
-				lblHP2.setText("HP: " + p2.getHp() + "/" + p2.getMaxHp());
-		        lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
-		        lblDeck2.setText("Deck: " + p2.getDeck().size());
-		        lblArmor2.setText("Armor: " + p2.getArmor());
-		        p2.discard(spellCard);
-
-			}
-		}
-	}
-	// Method called when player is using a spell card
 	public void castSpell(Card card, UnitCard unit) {
 		if(card instanceof SpellCard) {
 			if (playerTurn) { //player 1's turn
@@ -1190,8 +1151,11 @@ public class GameGUI extends JFrame {
 		refresh();
 	}
 		
-		
-	// Separated target logic from casting spell logic since they need to be called at different moments
+	/*
+	 * Method changes target logic based on spell target type
+	 * Pre-Condition: takes a Card selectedCard that should be an instance of SpellCard
+	 * Post-Condition: returns nothing, but changes GUI based on SpellCard target type
+	 */
 	private void spellTargetSelection(Card selectedCard) {
 		if (selectedCard instanceof SpellCard) { // Adds spell card to active hand
 			SpellCard spellCard = (SpellCard) selectedCard;
@@ -1210,8 +1174,6 @@ public class GameGUI extends JFrame {
 								public void mouseClicked(MouseEvent e) {
 									UnitCard targetUnit = unitCard;
 									spellCard.activate(targetUnit, null, p2, textAreaLog);
-									//p1.useMana(spellCard.getCost());
-									//lblMana1.setText("Mana: " + p1.getMana() + "/" + p1.getMaxMana());
 									panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 								}
 						});
@@ -1221,7 +1183,6 @@ public class GameGUI extends JFrame {
 				
 				// Player 2 Targeting a single target
 				else {
-//					btnAttack2.setText("Cast Spell");
 					// Player 2 targeting a Single Target
 						for (UnitCard unitCard: p1ActiveUnits) { // Iterates over the opponents UnitCards that are on the board
 							JPanel panelWithUnitCard = getPanelWithUnitCard(unitCard); // checks if the UnitCard is on JPanel
@@ -1231,8 +1192,6 @@ public class GameGUI extends JFrame {
 									public void mouseClicked(MouseEvent e) {
 										UnitCard targetUnit = unitCard;
 										spellCard.activate(targetUnit, null, p1, textAreaLog);
-										//p2.useMana(spellCard.getCost());
-										//lblMana2.setText("Mana: " + p2.getMana() + "/" + p2.getMaxMana());
 										panelWithUnitCard.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 									}
 							});
@@ -1241,8 +1200,7 @@ public class GameGUI extends JFrame {
 					}
 				break;
 
-			case "PlayerTarget":
-				lblInstructions.setText("Spell will be casted on enemy player when used.");
+			case "PlayerTarget": //Spell will be casted on enemy player when used.
 				// Player 1	targeting player 2
 				if (playerTurn) {
 					if (playerTurn) { //player 1's turn
@@ -1290,7 +1248,7 @@ public class GameGUI extends JFrame {
 				refresh();
 				break;
 		
-			case "MultiTarget":
+			case "MultiTarget": //spell cast on all enemy units on board
 				lblInstructions.setText("Select described number of enemy units.");
 				// Player 1 selecting multiple targets
 				if (playerTurn) { //player 1's turn
@@ -1335,16 +1293,20 @@ public class GameGUI extends JFrame {
 				
 		}
 	}}
-		
-	//Toggles JPanel color if unit is going to attack and sets unit to attacking
+	
+	/*
+	 * Method toggles JPanel color if unit is going to attack and sets unit to attacking
+	 * Pre-Condition: takes a UnitCard unit and a JPanel p, changing the JPanel based on whether the unit can attack
+	 * Post-Condition: returns nothing, but changes GUI based on Unit Card attacking status
+	 */
 	public void toggleAttack(UnitCard unit, JPanel p) {
 		if(unit != null) {
-			if(unit.canAttack()) {
+			if(unit.canAttack()) { //red border = attacking
 				if(!unit.isAttacking()) {
 					unit.setAttacking(true);
 					p.setBorder(BorderFactory.createLineBorder(Color.red));
 				}
-				else {
+				else { //black border = not attacking, but can if needed
 					if(unit.isAttacking()) {
 						unit.setAttacking(false);
 						p.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -1354,15 +1316,20 @@ public class GameGUI extends JFrame {
 		}
 	}
 	
+	/*
+	 * Method toggles JPanel color if unit is going to defend and sets unit to attacking
+	 * Pre-Condition: takes a UnitCard unit and a JPanel p, changing the JPanel based on whether the unit can attack
+	 * Post-Condition: returns nothing, but changes GUI based on Unit Card attacking status
+	 */
 	public void toggleDefend(UnitCard unit, JPanel p) {
 		if(unit != null) {
 			if(unit.canAttack()) { //Doubles as can defend in this case
-				if(!unit.isAttacking()) {
+				if(!unit.isAttacking()) { //yellow border = defending
 					unit.setAttacking(true);
 					p.setBorder(BorderFactory.createLineBorder(Color.yellow));
 				}
 				else {
-					if(unit.isAttacking()) {
+					if(unit.isAttacking()) { //black border = not defending, but can if needed
 						unit.setAttacking(false);
 						p.setBorder(BorderFactory.createLineBorder(Color.black));
 					}
@@ -1373,7 +1340,11 @@ public class GameGUI extends JFrame {
 	
 
 	
-	// Method to find the panel containing a given UnitCard
+	/*
+	 * Method to find the panel containing a given UnitCard
+	 * Pre-Condition: takes a UnitCard unit 
+	 * Post-Condition: returns JPanel containing unit
+	 */
 	private JPanel getPanelWithUnitCard(UnitCard unitCard) {
 	    for (Component comp : getContentPane().getComponents()) {
 	        if (comp instanceof JPanel && hasUnitCard((JPanel) comp, unitCard)) {
@@ -1383,7 +1354,11 @@ public class GameGUI extends JFrame {
 	    return null;
 	}
 
-	// Method to check if the JPanel contains a UnitCard
+	/*
+	 * Method to check whether a JPanel has a cerain UnitCard
+	 * Pre-Condition: takes a JPanel panel and UnitCard unitCard 
+	 * Post-Condition: returns boolean result of whether JPanel has that unitCard as its component
+	 */
 	private boolean hasUnitCard(JPanel panel, UnitCard unitCard) {
 	    for (Component comp : panel.getComponents()) {
 	        if (comp.equals(unitCard)) {
@@ -1393,7 +1368,11 @@ public class GameGUI extends JFrame {
 	    return false;
 	}
 	
-	// Refreshes GUI elements to reflect the current state of the game
+	/*
+	 * Method refreshes both player's info, hand, and board panels. Also checks if game has ended and changes GUI if so.
+	 * Pre-Condition: none
+	 * Post-Condition: returns nothing, updates GUI with current state of game
+	 */
     public void refresh() {
         // Update player information
         lblHP1.setText("HP: " + p1.getHp() + "/" + p1.getMaxHp());
@@ -1417,7 +1396,7 @@ public class GameGUI extends JFrame {
         updateUnitPanels(p1ActiveUnits, true); // Update Player 1's panels
         updateUnitPanels(p2ActiveUnits, false); // Update Player 2's panels
         
-        // Janky end game implementation
+        // End game implementation
         String endMsg = null;
         if(p2.getHp() <= 0) {
         	endMsg = "Player 1 wins!";
@@ -1439,23 +1418,23 @@ public class GameGUI extends JFrame {
         // Print refresh status to console for debugging
         System.out.println("GUI Refreshed");
     }
-		//Remove dead units from board
-		//Update all units HP display
-		//Update player hp display
-		//Change all units on active player's side to be able to attack
-		//Iterate active units and set them to not attacking
-		//Change all attacking unit's borders back to black
-		// From multiple target selection in playCard, clear the ArrayList selectedTargets when the player's turn ends
-		// Reset lblInstruction's text here (?)
 	
-	 // Update the display of a unit on a given panel
-    private void updateUnitDisplay(JPanel panel, UnitCard unit) {
-        // Ideally, this method should be adjusted based on how you want to display unit details
-        panel.setBorder(BorderFactory.createLineBorder(unit.canAttack() ? Color.black : Color.blue));
-        // You can add more GUI elements here, like labels for HP, attack values, etc.
-    }// Utility method to get the panel corresponding to a unit index
     
-    //Returns JPanel with unit in it
+    /*
+	 * Method updates the display of a unit on a given panel
+	 * Pre-Condition: none
+	 * Post-Condition: returns nothing, updates a panel's outline based on whether unit can attack
+	 */
+    private void updateUnitDisplay(JPanel panel, UnitCard unit) {
+        panel.setBorder(BorderFactory.createLineBorder(unit.canAttack() ? Color.black : Color.blue));
+    }
+    
+    
+    /*
+	 * Utility method to get the panel corresponding to a unit index
+	 * Pre-Condition: int index and String panelPrefix
+	 * Post-Condition: returns JPanel with name based on info provided
+	 */
     private JPanel getUnitPanel(int index, String panelPrefix) {
         String panelName = panelPrefix + (index + 1);
         for (Component comp : getContentPane().getComponents()) {
@@ -1466,7 +1445,11 @@ public class GameGUI extends JFrame {
         return null;
     }
     
-    //Returns CardJPanel in JPanel
+    /*
+	 * Method returns CardJPanel in JPanel
+	 * Pre-Condition: JPanel p
+	 * Post-Condition: returns CardJPanel
+	 */
     public CardJPanel getCardPanel(JPanel p) {
     	for(Component comp : p.getComponents()) {
     		if(comp instanceof CardJPanel) {
@@ -1476,7 +1459,11 @@ public class GameGUI extends JFrame {
     	return null;
     }
 	
-    // Updates the panels where units are displayed based on their current state
+    /*
+	 * Method updates unit panels' HP display based on current game state and clears inactive units
+	 * Pre-Condition: UnitCard array of active units, boolean for current player 
+	 * Post-Condition: returns nothing, updates GUI based on unit HP
+	 */
     private void updateUnitPanels(UnitCard[] activeUnits, boolean isPlayerOne) {
         String panelPrefix = isPlayerOne ? "panel1" : "panel2";
         for (int i = 0; i < activeUnits.length; i++) {
