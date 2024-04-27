@@ -1202,12 +1202,14 @@ public class GameGUI extends JFrame {
 			if(card instanceof SpellCard) {
 				if (playerTurn) { //player 1's turn
 					hand1.remove(selectedCard);
+					p1.useMana(card.getCost());
 					listHand1.setListData(p1.getHandNamesArray());
 					textAreaInfo1.setText("");
 					textAreaLog.append("Player 1 played " + selectedCard.getName() + "\n");
 				}
 				else { //player 2's turn
 					hand2.remove(selectedCard);
+					p2.useMana(card.getCost());
 					listHand2.setListData(p2.getHandNamesArray());
 					textAreaInfo2.setText("");
 					textAreaLog.append("Player 2 played " + selectedCard.getName() + "\n");
